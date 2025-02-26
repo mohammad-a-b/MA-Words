@@ -1,10 +1,9 @@
-<script setup >
-const { data: home } = await useAsyncData(() => queryCollection('content').path('/').first())
-
+<script setup>
 
 </script>
 
 <template>
-  <ContentRenderer v-if="home" :value="home" />
-  <div v-else>Home not found</div>
+ <main>heeelllooo
+    
+ </main>
 </template>

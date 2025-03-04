@@ -121,17 +121,28 @@ const { data: allPosts } = await useAsyncData("blog-posts", () => {
 .animate-pulse {
   animation: pulse 1s infinite;
 }
-</style>
-   -->
+  </style>
+-->
 
 <script setup>
 const { data: allPosts } = await useAsyncData("blog-posts", () => {
   return queryCollection("blog").order("date", "DESC").all();
 });
+
+import { useDark } from "@vueuse/core";
+const isDark = useDark({
+  selector: "html",
+  attribute: "class",
+  valueDark: "dark",
+  valueLight: "light",
+  storageKey: "vueuse-dark",
+});
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#0a0a12] text-gray-100 overflow-x-hidden p-8">
+  <main
+    class="min-h-screen overflow-x-hidden p-8 transition-colors duration-500"
+  >
     <div class="parallax-wrapper relative h-[90vh] -mb-[50vh]">
       <div class="parallax-layers sticky top-0 h-screen">
         <div
@@ -150,11 +161,20 @@ const { data: allPosts } = await useAsyncData("blog-posts", () => {
           class="parallax-layer absolute inset-0 flex items-center justify-center"
         >
           <h1
-            class="text-[10vw] leading-none text-center [text-shadow:0_0_30px_#7c3aed] animate-float"
+            class="text-[10vw] text-center animate-float"
+            :class="
+              isDark
+                ? '[text-shadow:0_0_30px_#7c3aed]'
+                : '[text-shadow:0_0_30px_#7c3aed80]'
+            "
           >
-            وبلاگ <span class="text-[#00ff87]"> من </span>
+            وبلاگ
+            <span :class="isDark ? 'text-[#00ff87]' : 'text-[#7c3aed]'">
+              من
+            </span>
             <div
-              class="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-[#00ff87] blur-lg animate-pulse"
+              class="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-1 blur-lg animate-pulse"
+              :class="isDark ? 'bg-[#00ff87]' : 'bg-[#7c3aed]'"
             ></div>
           </h1>
         </div>
@@ -166,7 +186,8 @@ const { data: allPosts } = await useAsyncData("blog-posts", () => {
         <article
           v-for="post in allPosts"
           :key="post.id"
-          class="bg-[#0f0f1d] rounded-2xl p-6 transition transform hover:-translate-y-2 hover:shadow-xl"
+          class="rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-2"
+          :class="isDark ? 'bg-[#0f0f1d]' : 'bg-[#f8f9fa]'"
           style="transform-style: preserve-3d"
         >
           <div
@@ -184,7 +205,7 @@ const { data: allPosts } = await useAsyncData("blog-posts", () => {
                 v-if="post.meta.image"
                 :src="post.meta.image"
                 :alt="post.title"
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                class="w-full h-full object-cover transition-transform duration-700"
               />
               <div class="absolute bottom-4 left-4 flex items-center space-x-2">
                 <div
@@ -243,12 +264,12 @@ html {
     transform: translateY(-160px) rotate(-1deg);
   }
   50% {
-    transform: translateY(  -200px) rotate(1deg);
+    transform: translateY(-160px) rotate(1.5deg);
   }
 }
 
 .animate-float {
-  animation: float 5s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 @keyframes parallax {
@@ -256,12 +277,12 @@ html {
     transform: translateY(-20vh);
   }
   to {
-    transform: translateY(20vh);
+    transform: translateY(15vh);
   }
 }
 
 .parallax-layer {
-  animation: parallax 20s linear infinite alternate;
+  animation: parallax 25s linear infinite alternate;
 }
 
 @keyframes scan {

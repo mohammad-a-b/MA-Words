@@ -3,3 +3,6 @@
 body{
   font-family: Vazirmatn !important; 
 }
+button{
+  cursor: pointer;
+}

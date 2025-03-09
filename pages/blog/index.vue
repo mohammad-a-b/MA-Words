@@ -36,16 +36,16 @@ const isDark = useDark({
         <div
           class="parallax-layer absolute inset-0 flex items-center justify-center"
         >
-          <h1
-            class="text-[10vw] text-center animate-float font-bold"
+        <h1
+            class="text-center animate-float font-bold"
             :class="
               isDark
                 ? '[text-shadow:0_0_15px_#7091F5]'
                 : '[text-shadow:0_0_15px_#7091F560]'
             "
+            style="font-size: clamp(4rem, 8rem, 10vw); line-height: 1.2;"
           >
             وبلاگ
-
             <span :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'">
               من
             </span>

@@ -4,113 +4,117 @@ const { data: post } = await useAsyncData(`blog-${slug}`, () => {
   return queryCollection("blog").path(`/blog/${slug}`).first();
 });
 
+const isDark = useDark({
+  selector: "html",
+  attribute: "class",
+  valueDark: "dark",
+  valueLight: "light",
+  storageKey: "vueuse-dark",
+});
 </script>
 
 <template>
-  <div>
-    <main class="min-h-screen bg-[#0a0a12] overflow-hidden relative">
-      <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:40px_40px]"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(45deg,#00000000_49%,#7c3aed20_50%,#00000000_51%)] [background-size:10px_10px] opacity-30 animate-grid-pulse"></div>
-      </div>
+  <main class="overflow-x-hidden p-8 transition-colors duration-300" dir="rtl">
+    <div class="parallax-wrapper">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px]"
+      ></div>
+    </div>
 
-      <div class="container mx-auto px-4 relative z-10 py-28">
-        <article 
-          v-if="post"
-          class="max-w-4xl mx-auto bg-gradient-to-br from-[#0f0f1d] to-[#16213e] rounded-[3rem] p-12 shadow-2xl border-2 border-[#ffffff10] hover:border-[#7c3aed60] transition-all duration-700 group"
-          style="transform-style: preserve-3d;"
-        >
-          <div class="absolute inset-0 rounded-[3rem] bg-[radial-gradient(circle_at_center,#7c3aed30_0%,transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-          <div class="relative space-y-8 [transform:translateZ(30px)]">
-            <header class="mb-12 text-center">
-              <h1 class="text-6xl font-orbitron bg-gradient-to-r from-[#7c3aed] to-[#00ff87] bg-clip-text text-transparent [text-shadow:0_0_30px_#7c3aed80] animate-title-glow">
-                {{ post.title }}
-              </h1>
-              <div class="mt-6 flex items-center justify-center space-x-4">
-                <div class="w-3 h-3 bg-[#00ff87] rounded-full animate-pulse"></div>
-                <p class="text-gray-400">
-                  {{ new Date(post.date).toLocaleDateString("fa-IR") }}
-                </p>
-              </div>
-            </header>
-
-            <div class="prose prose-invert max-w-none text-gray-300 text-lg leading-relaxed backdrop-blur-lg p-8 rounded-2xl bg-[#ffffff05]">
-              <ContentRenderer :value="post" />
-            </div>
-
-            <div class="mt-16 flex justify-start">
-              <NuxtLink
-                to="/blog"
-                class="inline-flex items-center gap-3 px-8 py-4 bg-[linear-gradient(45deg,#7c3aed30,#00ff8730)] hover:bg-[linear-gradient(45deg,#7c3aed50,#00ff8750)] backdrop-blur-xl border-2 border-[#ffffff30] hover:border-[#7c3aed] rounded-2xl transition-all duration-400 group/btn"
-              >
-              <svg class="w-6 h-6 -rotate-180 group-hover/btn:rotate-0 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-              </svg>
-                <span class=" font-medium text-lg">بازگشت به وبلاگ</span>
-              </NuxtLink>
-            </div>
+    <div class="relative z-10 container mx-auto px-4 xl:px-0 py-20">
+      <article
+        v-if="post"
+        class="max-w-3xl mx-auto rounded-3xl p-8 transition-all duration-300"
+        :class="isDark ? 'bg-[#0f0f1d] shadow-2xl' : 'bg-white shadow-lg'"
+      >
+        <header class="mb-12 text-center">
+          <h1
+            class="text-4xl md:text-5xl font-bold mb-8 animate-float"
+            :class="
+              isDark
+                ? 'text-[#7091F5] [text-shadow:0_0_20px_#7091F550]'
+                : 'text-[#578FCA] [text-shadow:0_0_20px_#578FCA30]'
+            "
+          >
+            {{ post.title }}
+          </h1>
+          <div class="flex items-center justify-center gap-4">
+            <div
+              class="w-2 h-2 rounded-full animate-pulse"
+              :class="isDark ? 'bg-[#7091F5]' : 'bg-[#578FCA]'"
+            ></div>
+            <p
+              class="text-sm"
+              :class="isDark ? 'text-gray-400' : 'text-gray-600'"
+            >
+              {{ new Date(post.date).toLocaleDateString("fa-IR") }}
+            </p>
           </div>
-        </article>
+        </header>
 
-        <p 
-          v-else 
-          class="text-center text-4xl font-orbitron bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent animate-pulse"
+        <div
+          class="prose prose-lg max-w-none mb-12"
+          :class="isDark ? 'prose-invert' : 'text-gray-700'"
         >
-          404 | پستی یافت نشد 🔍
-        </p>
-      </div>
+          <ContentRenderer :value="post" />
+        </div>
 
-      <div class="particles absolute inset-0 z-0 pointer-events-none"></div>
-    </main>
-  </div>
+        <NuxtLink
+          to="/blog"
+          class="inline-flex items-center gap-3 px-6 py-3 rounded-full border transition-all duration-300"
+          :class="
+            isDark
+              ? 'border-[#ffffff30] hover:border-[#7091F5] text-gray-300 hover:text-[#7091F5]'
+              : 'border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA]'
+          "
+        >
+          <svg
+            class="w-5 h-5 rotate-180 transform scale-x-[-1] transition-transform"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          <span class="font-medium">بازگشت به وبلاگ</span>
+        </NuxtLink>
+      </article>
+
+      <p
+        v-else
+        class="text-center text-3xl font-bold py-20"
+        :class="isDark ? 'text-[#7091F5]' : 'text-[#578FCA]'"
+      >
+        ۴۰۴ | مقاله مورد نظر یافت نشد
+      </p>
+    </div>
+  </main>
 </template>
 
-<style>
-@keyframes title-glow {
-  0%, 100% { text-shadow: 0 0 30px #7c3aed80; }
-  50% { text-shadow: 0 0 60px #7c3aed, 0 0 30px #00ff8780; }
+<style scoped>
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
-.animate-title-glow {
-  animation: title-glow 3s ease-in-out infinite;
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
 
-@keyframes grid-pulse {
-  0% { background-position: 0 0; }
-  100% { background-position: 10px 10px; }
-}
-
-.animate-grid-pulse {
-  animation: grid-pulse 20s linear infinite;
-}
-
-.particles::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle at 20% 80%, #7c3aed20 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, #00ff8720 0%, transparent 50%);
-  animation: particles-float 40s linear infinite;
-}
-
-@keyframes particles-float {
-  0% { transform: translate(0, 0); }
-  33% { transform: translate(5vw, 5vh); }
-  66% { transform: translate(-5vw, -5vh); }
-  100% { transform: translate(0, 0); }
-}
-
-
-::-webkit-scrollbar {
-  width: 12px;
-  background: #0a0a12;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #7c3aed, #00ff87);
-  border-radius: 10px;
-  border: 3px solid #0a0a12;
+.stars {
+  background: radial-gradient(1.5px at 90% 20%, #fff8 50%, transparent),
+    radial-gradient(1.5px at 10% 90%, #fff8 50%, transparent);
+  background-size: 200% 200%;
+  animation: scan 60s linear infinite;
 }
 </style>

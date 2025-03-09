@@ -1,135 +1,8 @@
-<!-- <script setup>
-const { data: allPosts } = await useAsyncData("blog-posts", () => {
-  return queryCollection("blog").order("date", "DESC").all();
-});
-</script>
-
-<template>
-  <main
-    class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 py-20"
-  >
-    <div class="container mx-auto px-4">
-      <div
-        class="relative h-[400px] overflow-hidden mb-16 rounded-3xl shadow-2xl"
-      >
-        <img
-          src="https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="تصویر هدر"
-          class="w-full h-full object-cover transform scale-105 hover:scale-100 transition-transform duration-1000"
-        />
-        <div
-          class="absolute inset-0 bg-gradient-to-r flex items-center justify-center"
-        >
-          <h1 class="text-9xl font-extrabold text-white animate-fade-in">
-            وبلاگ من
-          </h1>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <article
-          border
-          v-for="post in allPosts"
-          :key="post.id"
-          class="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-gray-200"
-        >
-          <NuxtLink :to="post.path" class="block">
-            <div
-              class="h-56 bg-gray-300 rounded-xl mb-6 overflow-hidden relative"
-            >
-              <img
-                v-if="post.meta.image"
-                :src="post.meta.image"
-                :alt="post.title"
-                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
-              <div
-                v-else
-                class="flex items-center justify-center h-full text-gray-500"
-              >
-                تصویر موجود نیست
-              </div>
-            </div>
-            <h2
-              class="text-2xl font-bold text-gray-800 hover:text-blue-500 transition-colors duration-300"
-            >
-              {{ post.title }}
-            </h2>
-            <p class="text-sm text-gray-500 mt-2">
-              📅 {{ new Date(post.date).toLocaleDateString("fa-IR") }}
-            </p>
-            <p
-              class="text-gray-600 mt-4 line-clamp-3 leading-relaxed"
-              v-html="
-                post.description || 'خلاصه‌ای از این پست در اینجا قرار می‌گیرد.'
-              "
-            ></p>
-          </NuxtLink>
-          <div class="mt-4 flex items-center justify-between">
-            <NuxtLink
-              :to="post.path"
-              class="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              ادامه مطلب
-            </NuxtLink>
-          </div>
-        </article>
-      </div>
-    </div>
-  </main>
-</template>
-
-<style>
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.animate-fade-in {
-  animation: fade-in 1s ease-out;
-}
-
-@keyframes scale-in {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-.animate-scale-in {
-  animation: scale-in 1s ease-out;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-.animate-pulse {
-  animation: pulse 1s infinite;
-}
-  </style>
--->
-
 <script setup>
 const { data: allPosts } = await useAsyncData("blog-posts", () => {
   return queryCollection("blog").order("date", "DESC").all();
 });
 
-import { useDark } from "@vueuse/core";
 const isDark = useDark({
   selector: "html",
   attribute: "class",
@@ -141,7 +14,8 @@ const isDark = useDark({
 
 <template>
   <main
-    class="min-h-screen overflow-x-hidden p-8 transition-colors duration-500"
+    class="min-h-screen overflow-x-hidden p-8 transition-colors duration-300"
+    dir="rtl"
   >
     <div class="parallax-wrapper relative h-[90vh] -mb-[50vh]">
       <div class="parallax-layers sticky top-0 h-screen">
@@ -150,32 +24,35 @@ const isDark = useDark({
         >
           <div
             class="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px]"
-          ></div>
+          />
         </div>
+
         <div
           class="parallax-layer absolute inset-0 [transform:translateZ(-3px)_scale(1.3)]"
         >
-          <div class="stars absolute inset-0"></div>
+          <div class="stars absolute inset-0 opacity-50" />
         </div>
+
         <div
           class="parallax-layer absolute inset-0 flex items-center justify-center"
         >
           <h1
-            class="text-[10vw] text-center animate-float"
+            class="text-[10vw] text-center animate-float font-bold"
             :class="
               isDark
-                ? '[text-shadow:0_0_30px_#7c3aed]'
-                : '[text-shadow:0_0_30px_#7c3aed80]'
+                ? '[text-shadow:0_0_15px_#7091F5]'
+                : '[text-shadow:0_0_15px_#7091F560]'
             "
           >
             وبلاگ
-            <span :class="isDark ? 'text-[#00ff87]' : 'text-[#7c3aed]'">
+
+            <span :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'">
               من
             </span>
             <div
-              class="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-1 blur-lg animate-pulse"
-              :class="isDark ? 'bg-[#00ff87]' : 'bg-[#7c3aed]'"
-            ></div>
+              class="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-1 blur-md animate-pulse"
+              :class="isDark ? 'bg-[#578FCA]/70' : 'bg-[#7091F5]/70'"
+            />
           </h1>
         </div>
       </div>
@@ -186,67 +63,90 @@ const isDark = useDark({
         <article
           v-for="post in allPosts"
           :key="post.id"
-          class="rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-2"
-          :class="isDark ? 'bg-[#0f0f1d]' : 'bg-[#f8f9fa]'"
-          style="transform-style: preserve-3d"
+          class="group rounded-2xl p-6 transition-all duration-300 relative flex flex-col border"
+          :class="
+            isDark
+              ? 'bg-[#0f0f1d] border-[#ffffff10]'
+              : 'bg-white border-[#00000010]'
+          "
         >
           <div
-            class="absolute inset-0 rounded-3xl [background:linear-gradient(45deg,#7c3aed12,#00ff8708)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          ></div>
+            class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            :class="
+              isDark
+                ? 'bg-gradient-to-bl from-[#7091F515] to-[#578FCA10]'
+                : 'bg-gradient-to-bl from-[#7091F510] to-[#578FCA08]'
+            "
+          />
 
-          <NuxtLink :to="post.path" class="relative block">
+          <NuxtLink :to="post.path" class="relative block flex-grow">
             <div
-              class="relative h-64 mb-8 rounded-2xl overflow-hidden [transform:translateZ(30px)]"
+              class="relative h-64 mb-8 rounded-2xl overflow-hidden transition-transform duration-300 group-hover:scale-[1.02]"
             >
               <div
-                class="absolute inset-0 bg-[linear-gradient(120deg,#7c3aed30_0%,#00ff8730_100%)]"
-              ></div>
+                class="absolute inset-0 bg-gradient-to-t from-[#000000cc] to-transparent opacity-50 transition-opacity duration-300 group-hover:opacity-70"
+              />
               <img
                 v-if="post.meta.image"
                 :src="post.meta.image"
                 :alt="post.title"
-                class="w-full h-full object-cover transition-transform duration-700"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div class="absolute bottom-4 left-4 flex items-center space-x-2">
+
+              <div class="absolute bottom-4 right-4 flex items-center gap-2">
+                <span
+                  class="px-1 py-1 rounded-lg text-sm text-white/90 bg-[#00000090] backdrop-blur-sm"
+                >
+                  {{ new Date(post.date).toLocaleDateString("fa-IR") }}
+                </span>
                 <div
-                  class="w-2 h-2 bg-[#00ff87] rounded-full animate-pulse"
-                ></div>
-                <span class="text-sm">{{
-                  new Date(post.date).toLocaleDateString("fa-IR")
-                }}</span>
+                  class="w-2 h-2 rounded-full animate-pulse bg-current"
+                  :class="isDark ? 'text-[#578FCA]/80' : 'text-[#7091F5]/80'"
+                />
               </div>
             </div>
 
             <h2
-              class="text-2xl font-bold mb-4 [text-shadow:0_2px_8px_#7c3aed40] group-hover:[text-shadow:0_2px_20px_#7c3aed80] transition-all duration-500"
+              class="text-2xl font-bold mb-4 pr-2 transition-all duration-300 hover:pr-3.5"
+              :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
             >
               {{ post.title }}
             </h2>
-            <p
-              class="text-gray-400 mb-6 line-clamp-3 leading-relaxed [transform:translateZ(20px)]"
-              v-html="post.description || '...'"
-            ></p>
-          </NuxtLink>
 
-          <NuxtLink
-            :to="post.path"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-[#ffffff08] hover:bg-[#ffffff12] backdrop-blur-lg rounded-full border border-[#ffffff10] hover:border-[#7c3aed] transition-all duration-300"
-          >
-            <span>مطالعه بیشتر</span>
-            <svg
-              class="w-4 h-4 -rotate-45 group-hover:rotate-0 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              ></path>
-            </svg>
+            <p
+              class="mb-4 line-clamp-3 leading-relaxed text-justify text-[15px]"
+              :class="isDark ? 'text-gray-300/90' : 'text-gray-600/90'"
+              v-html="post.description || '...'"
+            />
           </NuxtLink>
+          <div>
+            <NuxtLink
+              :to="post.path"
+              class="inline-flex items-center gap-2 px-4 py-3 rounded-full border transition-all duration-300 hover:pr-6"
+              :class="
+                isDark
+                  ? 'bg-[#ffffff08] border-[#ffffff15] hover:border-[#578FCA] hover:text-[#578FCA]'
+                  : 'bg-[#f8f9fa] border-[#7091F520] hover:border-[#7091F5] hover:text-[#7091F5]'
+              "
+            >
+              <div class="z-10 flex justify-center items-center gap-2">
+                <svg
+                  class="scale-x-[-1] w-4 h-4 rotate-145 transition-transform group-hover:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+                <span>مطالعه بیشتر</span>
+              </div>
+            </NuxtLink>
+          </div>
         </article>
       </div>
     </div>
@@ -254,68 +154,76 @@ const isDark = useDark({
 </template>
 
 <style>
-html {
-  scroll-behavior: smooth;
-}
-
 @keyframes float {
   0%,
   100% {
-    transform: translateY(-160px) rotate(-1deg);
+    transform: translateY(-160px) rotate(1deg);
   }
   50% {
-    transform: translateY(-160px) rotate(1.5deg);
+    transform: translateY(-165px) rotate(-1deg);
   }
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
-}
+  animation: float 5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
 
-@keyframes parallax {
-  from {
-    transform: translateY(-20vh);
-  }
-  to {
-    transform: translateY(15vh);
-  }
-}
-
-.parallax-layer {
-  animation: parallax 25s linear infinite alternate;
 }
 
 @keyframes scan {
   0% {
-    background-position: 0 0;
+    background-position: 100% 100%;
   }
   100% {
-    background-position: 0 100%;
+    background-position: 0 0;
   }
 }
 
 .stars {
-  animation: scan 30s linear infinite;
+  animation: scan 120s linear infinite;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 article {
-  box-shadow: 0 0 0 0 #7c3aed40;
-  transition: box-shadow 0.4s, transform 0.4s;
+  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28),
+    box-shadow 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28), border-color 0.3s ease;
+  will-change: transform, box-shadow;
 }
 
 article:hover {
-  box-shadow: 0 0 60px -20px #7c3aed80;
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 25px 60px -12px rgba(113, 145, 245, 0.3);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
-  background: #0a0a12;
+
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #7c3aed, #00ff87);
-  border-radius: 8px;
+  background: linear-gradient(45deg, #4338bb, #51c79c);
+  border-radius: 10px;
   border: 2px solid #0a0a12;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.group:hover .group-hover\:rotate-180 {
+  transform: rotate(180deg) scaleX(-1);
 }
 </style>

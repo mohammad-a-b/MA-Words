@@ -1,5 +1,6 @@
 import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
+  
   modules: [
     "@nuxt/content",
     "@vueuse/nuxt",
@@ -9,4 +10,5 @@ export default defineNuxtConfig({
   vite: {
     plugins: tailwindcss(),
   },
+  
 });

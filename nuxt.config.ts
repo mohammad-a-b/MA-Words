@@ -2,7 +2,6 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   modules: [
     "@nuxt/content",
-    "@nuxtjs/color-mode",
     "@vueuse/nuxt",
   ],
   compatibilityDate: "2025-02-23",

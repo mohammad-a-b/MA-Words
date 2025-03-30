@@ -1,8 +1,10 @@
 ---
 date: 2024-12-12
-image: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWOyd44vY6d76a2rgRo_MGutcwlosrCOG5-g&s
+image: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmcSfj3ObecfkdtNZ04fnLB7qe74-E9Db0-w&s
+
 ---
-# مبانی  شروع کار با طراحی وب
+
+# مبانی  شروع وب
 
 اگر تازه وارد دنیای طراحی وب شده‌اید، **HTML** و **CSS** دو زبان پایه‌ای هستند که باید با آن‌ها آشنا شوید.
 

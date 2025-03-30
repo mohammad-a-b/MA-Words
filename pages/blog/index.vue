@@ -1,7 +1,8 @@
 <script setup>
-const { data: allPosts } = await useAsyncData("blog-posts", () => {
-  return queryCollection("blog").order("date", "DESC").all();
-});
+const { data: allPosts } = await useAsyncData("blog-posts", () =>
+  queryCollection("blog").order("date", "DESC").all()
+);
+
 const searchQuery = ref("");
 const filteredPosts = computed(() => {
   if (!allPosts.value) return [];
@@ -13,7 +14,6 @@ const filteredPosts = computed(() => {
     );
   });
 });
-
 const isDark = useDark({
   selector: "html",
   attribute: "class",
@@ -24,51 +24,28 @@ const isDark = useDark({
 </script>
 
 <template>
-  <main
-    class="min-h-screen overflow-x-hidden p-8 transition-colors duration-300"
-   
-  >
-    <div class="parallax-wrapper relative h-[90vh] -mb-[50vh]">
-      <div class="parallax-layers sticky top-0 h-screen">
-        <div
-          class="parallax-layer absolute inset-0 [transform:translateZ(-5px)_scale(1.6)]"
-        >
-          <div
-            class="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px]"
-          ></div>
-        </div>
-        <div
-          class="parallax-layer absolute inset-0 [transform:translateZ(-3px)_scale(1.3)]"
-        >
-          <div class="stars absolute inset-0 opacity-50"></div>
-        </div>
-        <div
-          class="parallax-layer absolute inset-0 flex items-center justify-center"
-        >
-          <h1
-            class="text-center animate-float font-bold"
-            :class="
-              isDark
-                ? '[text-shadow:0_0_15px_#7091F5]'
-                : '[text-shadow:0_0_15px_#7091F560]'
-            "
-            style="font-size: clamp(4rem, 8rem, 10vw); line-height: 1.2"
-          >
-            وبلاگ
-            <span :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
-              >من</span
-            >
-            <div
-              class="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-1 blur-md animate-pulse"
-              :class="isDark ? 'bg-[#578FCA]/70' : 'bg-[#7091F5]/70'"
-            ></div>
-          </h1>
-        </div>
-      </div>
-    </div>
+  <main class="duration-300 p-4 sm:p-6 md:p-8 lg:p-8 xl:p-10">
+    <header class="text-center py-6 sm:py-8 md:py-10">
+      <h1
+        class="font-bold animate-float"
+        :class="
+          isDark
+            ? '[text-shadow:0_0_15px_#7091F5]'
+            : '[text-shadow:0_0_15px_#7091F560]'
+        "
+        style="font-size: clamp(3rem, 8vw, 6rem); line-height: 1.2"
+      >
+        وبلاگ
+        <span :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'">من</span>
+      </h1>
+      <div
+        class="mt-3 w-20 h-1 mx-auto blur-md animate-pulse"
+        :class="isDark ? 'bg-[#578FCA]/70' : 'bg-[#7091F5]/70'"
+      ></div>
+    </header>
 
-    <section class="relative z-10 container mx-auto px-4 xl:px-0 py-32">
-      <div class="flex justify-start mb-8">
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex justify-center mb-4">
         <input
           v-model="searchQuery"
           type="text"
@@ -81,17 +58,22 @@ const isDark = useDark({
           "
         />
       </div>
+    </section>
+
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div
         v-if="filteredPosts.length === 0"
-        class="text-center text-xl text-gray-500"
+        class="text-center text-lg text-gray-500"
       >
         هیچ نتیجه‌ای پیدا نشد.
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
+      >
         <article
           v-for="post in filteredPosts"
           :key="post.id"
-          class="group rounded-2xl p-6 transition-all duration-300 relative flex flex-col border"
+          class="group rounded-2xl p-3 sm:p-5 transition-all duration-300 relative flex flex-col border"
           :class="
             isDark
               ? 'bg-[#0f0f1d] border-[#ffffff10]'
@@ -106,9 +88,9 @@ const isDark = useDark({
                 : 'bg-gradient-to-bl from-[#7091F510] to-[#578FCA08]'
             "
           ></div>
-          <NuxtLink :to="post.path" class="relative block flex-grow">
+          <NuxtLink :to="post.path" class="relative block">
             <div
-              class="relative h-64 mb-8 rounded-2xl overflow-hidden transition-transform duration-300 group-hover:scale-[1.02]"
+              class="relative h-48 sm:h-56 mb-3 rounded-2xl transition-transform duration-300 group-hover:scale-105"
             >
               <div
                 class="absolute inset-0 bg-gradient-to-t from-[#000000cc] to-transparent opacity-50 transition-opacity duration-300 group-hover:opacity-70"
@@ -117,66 +99,45 @@ const isDark = useDark({
                 v-if="post.meta.image"
                 :src="post.meta.image"
                 :alt="post.title"
-                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                class="w-full h-full object-cover transition-transform duration-300 rounded-2xl"
               />
-              <div class="absolute bottom-4 right-4 flex items-center gap-2">
+              <div class="absolute bottom-2 right-2 flex items-center gap-1">
                 <span
-                  class="px-1 py-1 rounded-lg text-sm text-white/90 bg-[#00000090] backdrop-blur-sm"
+                  class="px-1 py-0.5 rounded text-xs sm:text-sm text-white/90 bg-[#00000090] backdrop-blur-sm"
                 >
                   {{ new Date(post.date).toLocaleDateString("fa-IR") }}
                 </span>
-                <svg
-                  class="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2v-6H3v6a2 2 0 002 2z"
-                  />
-                </svg>
+                <IconsDate> </IconsDate>
               </div>
             </div>
+          </NuxtLink>
+          <div class="flex flex-col flex-grow">
             <h2
-              class="text-2xl font-bold mb-4 pr-2 transition-all duration-300"
+              class="text-lg sm:text-xl md:text-2xl font-bold mb-2 transition-all duration-300"
               :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
             >
               {{ post.title }}
             </h2>
             <p
-              class="mb-4 line-clamp-3 leading-relaxed text-justify text-[15px]"
+              class="mb-3 text-xs sm:text-sm md:text-base line-clamp-3 text-justify"
               :class="isDark ? 'text-gray-300/90' : 'text-gray-600/90'"
-              v-html="post.description || '...'"
-            ></p>
-          </NuxtLink>
+            >
+              {{ post.description || "..." }}
+            </p>
+          </div>
           <div>
             <NuxtLink
               :to="post.path"
-              class="inline-flex items-center gap-2 px-4 py-3 rounded-full border transition-all duration-300 hover:pr-6"
+              class="inline-flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-full border transition-all duration-300 hover:pr-6"
               :class="
                 isDark
                   ? 'bg-[#ffffff08] border-[#ffffff15] hover:border-[#578FCA] hover:text-[#578FCA]'
                   : 'bg-[#f8f9fa] border-[#7091F520] hover:border-[#7091F5] hover:text-[#7091F5]'
               "
             >
-              <div class="z-10 flex justify-center items-center gap-2">
-                <svg
-                  class="w-5 h-5 transform rotate-300 transition-transform duration-300 group-hover:rotate-360"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17 8l4 4m0 0l-4 4m4-4H6"
-                  />
-                </svg>
-                <span>مطالعه بیشتر</span>
+              <div class="z-10 flex items-center gap-2">
+                <IconsArrow></IconsArrow>
+                <span class="text-sm sm:text-base">مطالعه بیشتر</span>
               </div>
             </NuxtLink>
           </div>
@@ -185,28 +146,28 @@ const isDark = useDark({
     </section>
 
     <section
-      class="relative z-10 container mx-auto px-4 xl:px-0 py-20 border-t mt-16"
+      class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 border-t mt-4"
       :class="isDark ? 'border-[#ffffff10]' : 'border-[#00000010]'"
     >
-      <div class="flex flex-col items-center text-center space-y-4">
+      <div class="flex flex-col items-center text-center space-y-3">
         <div
-          class="w-20 h-20 rounded-full overflow-hidden border-4"
+          class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4"
           :class="isDark ? 'border-[#578FCA]' : 'border-[#7091F5]'"
         >
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_zfYdfminxFt2Ymu1k-hyEz3slVvH1nZN_Yetgfk2S0WZhvybVuL5zKQ&s"
-            alt=" عکس پروفایل"
+            alt="عکس پروفایل"
             class="w-full h-full object-cover"
           />
         </div>
         <h2
-          class="text-3xl font-bold"
+          class="text-lg sm:text-xl md:text-2xl font-bold"
           :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
         >
           درباره من
         </h2>
         <p
-          class="max-w-2xl text-lg leading-relaxed"
+          class="max-w-2xl text-xs sm:text-sm md:text-base leading-relaxed"
           :class="isDark ? 'text-gray-300' : 'text-gray-600'"
         >
           سلام، من محمد امیر هستم؛ توسعه‌دهنده و نویسنده محتوا. در این وبلاگ
@@ -222,27 +183,15 @@ const isDark = useDark({
 @keyframes float {
   0%,
   100% {
-    transform: translateY(-160px) rotate(1deg);
+    transform: translateY(-10px) rotate(1deg);
   }
   50% {
-    transform: translateY(-165px) rotate(-1deg);
+    transform: translateY(-15px) rotate(-1deg);
   }
 }
 .animate-float {
   animation: float 5s ease-in-out infinite;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
-}
-@keyframes scan {
-  0% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
-.stars {
-  animation: scan 120s linear infinite;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 article {
   transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28),
@@ -250,12 +199,7 @@ article {
   will-change: transform, box-shadow;
 }
 article:hover {
-  transform: translateY(-8px) scale(1.015);
-  box-shadow: 0 25px 60px -12px rgba(113, 145, 245, 0.3);
-}
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 250ms;
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 20px 40px -10px rgba(113, 145, 245, 0.3);
 }
 </style>

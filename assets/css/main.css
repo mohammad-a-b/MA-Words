@@ -3,11 +3,6 @@
 @theme{
   --font-sans: "Vazirmatn", "sans-serif";
 }
-
-html{
-  direction: rtl;
-}
-
 button{
   cursor: pointer;
 }

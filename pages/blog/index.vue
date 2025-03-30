@@ -26,7 +26,7 @@ const isDark = useDark({
 <template>
   <main
     class="min-h-screen overflow-x-hidden p-8 transition-colors duration-300"
-    dir="rtl"
+   
   >
     <div class="parallax-wrapper relative h-[90vh] -mb-[50vh]">
       <div class="parallax-layers sticky top-0 h-screen">

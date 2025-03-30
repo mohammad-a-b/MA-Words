@@ -13,13 +13,13 @@ const isDark = useDark({
 </script>
 
 <template>
-  <main class="overflow-x-hidden p-8 transition-colors duration-300" dir="rtl">
+  <main class="overflow-x-hidden p-8 transition-colors duration-300">
     <div class="relative min-h-screen">
       <div
         class="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px]"
       ></div>
       <div class="relative z-10 container mx-auto px-4 xl:px-0 py-20">
-        <article 
+        <article
           v-if="post"
           class="max-w-4xl mx-auto rounded-3xl p-10 transition-all duration-300 border-1 border-[#ffffff44]"
           :class="isDark ? 'bg-[#0f0f1d] shadow-2xl' : 'bg-white shadow-lg'"

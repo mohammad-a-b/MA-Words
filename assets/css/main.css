@@ -5,6 +5,7 @@
 }
 button{
   cursor: pointer;
+  outline: none;
 }
 .content-renderer .language-html.shiki{
     direction: ltr;

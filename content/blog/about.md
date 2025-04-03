@@ -1,7 +1,9 @@
 ---
 date: 2024-12-12
 image: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmcSfj3ObecfkdtNZ04fnLB7qe74-E9Db0-w&s
-
+category: "فرانت‌اند"
+tags: [ "devops", "backend", "serverless"]
+readingTime: 4
 ---
 
 # مبانی  شروع وب

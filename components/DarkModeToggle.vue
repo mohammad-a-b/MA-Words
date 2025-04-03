@@ -9,7 +9,6 @@ const isDark = useDark({
   storageKey: "vueuse-dark",
 });
 const toggleDark = useToggle(isDark);
-
 </script>
 
 <template>
@@ -18,8 +17,8 @@ const toggleDark = useToggle(isDark);
     class="fixed top-4 right-4 z-[9999] p-3 rounded-full backdrop-blur-lg border transition-all duration-500 shadow-xl hover:scale-110"
     :class="
       isDark
-        ? 'border-[#00ff8770] hover:border-[#00ff87] bg-[#00000030]'
-        : 'border-[#7c3aed70] hover:border-[#7c3aed] bg-[#ffffff20]'
+        ? 'border-[#ffffffab] hover:border-[#4d6c6482] bg-[#00000030]'
+        : 'border-[#000000ab] hover:border-[#182a2381] bg-[#ffffff20]'
     "
   >
     <div class="relative w-6 h-6">

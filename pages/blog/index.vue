@@ -66,5 +66,4 @@ onMounted(() => {
 </template>
 
 <style>
-@import "~/assets/css/blog.css";
 </style>

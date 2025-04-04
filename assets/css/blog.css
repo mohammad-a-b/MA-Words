@@ -1,10 +1,10 @@
 :root {
-  --primary-light: #7091F5;
-  --primary-dark: #578FCA;
+  --primary-light: #7091f5;
+  --primary-dark: #578fca;
   --bg-light: #ffffff;
   --bg-dark: #0f0f1d;
-  --text-light: #4B5563; /* text-gray-600 */
-  --text-dark: #D1D5DB;  /* text-gray-300 */
+  --text-light: #4b5563; /* text-gray-600 */
+  --text-dark: #d1d5db; /* text-gray-300 */
   --border-light: rgba(0, 0, 0, 0.1);
   --border-dark: rgba(255, 255, 255, 0.1);
 }
@@ -127,4 +127,4 @@
   .blog-text {
     font-size: 0.875rem;
   }
-} 
+}

@@ -3,8 +3,8 @@
   <ClientOnly>
     <NuxtLayout>
       <DarkModeToggle />
-      <NuxtPage /> </NuxtLayout
-  >
+      <NuxtPage />
+    </NuxtLayout>
   </ClientOnly>
 </template>
 

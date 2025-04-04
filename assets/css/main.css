@@ -3,6 +3,9 @@
 @theme{
   --font-sans: "Vazirmatn", "sans-serif";
 }
+*{
+  font-family: 'Vazirmatn', sans-serif;
+}
 button{
   cursor: pointer;
   outline: none;

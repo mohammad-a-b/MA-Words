@@ -32,7 +32,7 @@ const handleClick = () => {
 <template>
   <button
     @click="handleClick"
-    class="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm flex items-center gap-1 sm:gap-2 group border transition-all duration-200 blog-tag-button"
+    class="rounded-full text-xs sm:text-sm flex items-center gap-1 sm:gap-2 group border transition-all duration-200 blog-tag-button"
     :class="[
       active
         ? isDark
@@ -41,6 +41,7 @@ const handleClick = () => {
         : isDark
         ? 'bg-[#ffffff05] text-gray-300 hover:bg-[#ffffff10] border-white/10'
         : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border-gray-200',
+      $attrs.class || 'px-2 sm:px-3 py-1 sm:py-1.5'
     ]"
   >
     <IconsTag

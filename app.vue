@@ -2,8 +2,15 @@
 <template>
   <ClientOnly>
     <NuxtLayout>
-      <DarkModeToggle />
-      <NuxtPage />
+      <div class="container mx-auto px-4">
+        <DarkModeToggle />
+        <NuxtPage />
+        
+        <div class="border-t border-gray-200 dark:border-gray-700 my-10 pt-8">
+          <h2 class="text-2xl font-bold mb-6 text-center">نظرات کاربران</h2>
+          <Comments />
+        </div>
+      </div>
     </NuxtLayout>
   </ClientOnly>
 </template>
@@ -26,8 +33,8 @@ html.dark {
 }
 
 body {
-  @apply transition-colors duration-500;
   background-color: var(--color-bg);
   color: var(--color-text);
+  transition: background-color 0.3s, color 0.3s;
 }
 </style>

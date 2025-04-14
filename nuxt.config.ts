@@ -1,5 +1,11 @@
 import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      supabaseUrl: 'https://fpxuyexrbcxxppzehvoa.supabase.co',
+      supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZweHV5ZXhyYmN4eHBwemVodm9hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ2MzQ0MzYsImV4cCI6MjA2MDIxMDQzNn0.CZIojdUva0paY-v5eF6BZgkM3xfzG1nWe81JtmknYFM'
+    }
+  },
   app: {
     head: {
       htmlAttrs: {
@@ -11,6 +17,16 @@ export default defineNuxtConfig({
 
   modules: ["@nuxt/content", "@vueuse/nuxt", "@nuxtjs/google-fonts"],
 
+  build: {
+    transpile: ['vue-toastification'],
+  },
+
+  css: [
+    "~/assets/css/main.css",
+    "~/assets/css/blog.css",
+    "vue-toastification/dist/index.css"
+  ],
+
   googleFonts: {
     families: {
       Vazirmatn: [100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -21,8 +37,7 @@ export default defineNuxtConfig({
     download: true,
   },
 
-  css: ["~/assets/css/main.css", "~/assets/css/blog.css"],
   vite: {
-    plugins: tailwindcss(),
+    plugins: [tailwindcss()],
   },
 });

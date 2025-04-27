@@ -1,12 +1,13 @@
 ---
 
-title: "براهنمای جامع Next.js: از مبتدی تا پیشرفته"
+title: "راهنمای جامع Next.js: از مبتدی تا پیشرفته"
 date: 2024-03-15
-category: "فرانت‌اند"
+category: "توسعه وب"
 tags: ["vue","آموزش"]
 description: "آموزش کامل Next.js، از مفاهیم پایه تا تکنیک‌های پیشرفته برای ساخت اپلیکیشن‌های مدرن"
 image: "https://cdn.asriran.com/files/fa/news/1389/9/10/157860_125.jpg"
 readingTime: 10
+author: "محمد امیر برخورداری"
 ---
 
 # راهنمای جامع Next.js

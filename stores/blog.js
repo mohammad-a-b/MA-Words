@@ -15,6 +15,7 @@ const SORT_METHODS = {
 
 const STORAGE_KEYS = {
   bookmarks: "bookmarkedPosts",
+  comments: "postComments",
 };
 
 export const useBlogStore = defineStore("blog", () => {
@@ -30,6 +31,7 @@ export const useBlogStore = defineStore("blog", () => {
   const bookmarkedPosts = ref([]);
   const allPosts = ref([]);
   const isDarkMode = ref(null);
+  const comments = ref({});
 
   const initBookmarks = () => {
     if (process.client) {
@@ -38,6 +40,46 @@ export const useBlogStore = defineStore("blog", () => {
         bookmarkedPosts.value = JSON.parse(savedBookmarks);
       }
     }
+  };
+
+  const initComments = () => {
+    if (process.client) {
+      const savedComments = localStorage.getItem(STORAGE_KEYS.comments);
+      if (savedComments) {
+        comments.value = JSON.parse(savedComments);
+      }
+    }
+  };
+
+  const saveComments = () => {
+    if (process.client) {
+      localStorage.setItem(STORAGE_KEYS.comments, JSON.stringify(comments.value));
+    }
+  };
+
+  const addComment = (postId, comment) => {
+    if (!comments.value[postId]) {
+      comments.value[postId] = [];
+    }
+    comments.value[postId].push({
+      ...comment,
+      id: Date.now(),
+      date: new Date().toISOString(),
+    });
+    saveComments();
+  };
+
+  const deleteComment = (postId, commentId) => {
+    if (comments.value[postId]) {
+      comments.value[postId] = comments.value[postId].filter(
+        (c) => c.id !== commentId
+      );
+      saveComments();
+    }
+  };
+
+  const getPostComments = (postId) => {
+    return comments.value[postId] || [];
   };
 
   const initDarkMode = (isDark) => {
@@ -98,6 +140,7 @@ export const useBlogStore = defineStore("blog", () => {
 
       const matchesTag =
         !selectedTag.value || post.tags?.includes(selectedTag.value);
+
       const matchesCategory =
         !selectedCategory.value ||
         post.meta?.category === selectedCategory.value;
@@ -172,6 +215,7 @@ export const useBlogStore = defineStore("blog", () => {
     bookmarkedPosts,
     allPosts,
     isDarkMode,
+    comments,
 
     filteredPosts,
     sortedFilteredPosts,
@@ -181,6 +225,10 @@ export const useBlogStore = defineStore("blog", () => {
     remainingTagsCount,
 
     initBookmarks,
+    initComments,
+    addComment,
+    deleteComment,
+    getPostComments,
     initDarkMode,
     setAllPosts,
     isBookmarked,

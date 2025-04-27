@@ -1,11 +1,12 @@
 ---
 title: "آموزش React: شروع کار با کامپوننت‌ها"
 date: 2024-03-15
-category: "دواپس"
+category: "توسعه وب"
 tags: ["react", "javascript", "web", "frontend", "آموزش"]
 description: "در این مقاله، به بررسی اصول اولیه React و نحوه ساخت کامپوننت‌های قابل استفاده مجدد می‌پردازیم."
 image: https://cdn.nody.ir/files/2021/07/15/nody-%D8%B9%DA%A9%D8%B3-%D8%B7%D8%A8%DB%8C%D8%B9%D8%AA-%D8%B2%DB%8C%D8%A8%D8%A7-1626356194.jpg
 readingTime: 5
+author: "محمد امیر برخورداری"
 ---
 
 # آموزش React: شروع کار با کامپوننت‌ها

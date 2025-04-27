@@ -3,6 +3,7 @@ import { useRoute } from "vue-router";
 import { useHead } from "#imports";
 import { useBlogStore } from "~/stores/blog";
 import PostSidebar from "~/components/blog/PostSidebar.vue";
+import Comments from "~/components/blog/Comments.vue";
 
 const route = useRoute();
 const slug = route.params.slug;
@@ -15,6 +16,7 @@ const { data: post, pending } = await useAsyncData(`blog-${slug}`, () =>
 const { data: allPosts } = await useAsyncData("blog-posts", () =>
   queryCollection("blog").order("date", "DESC").all()
 );
+
 
 watch(
   allPosts,
@@ -107,46 +109,32 @@ onMounted(() => {
     ></div>
 
     <div class="relative min-h-screen">
-      <div
-        class="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px]"
-        :class="isDark ? 'opacity-20' : 'opacity-10'"
-      ></div>
-
-      <div
-        class="absolute inset-0 bg-gradient-to-b from-transparent to-[#7091F5] opacity-5"
-      ></div>
-
-      <div class="relative z-10 container mx-auto max-w-6xl px-4 xl:px-0 py-10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
         <div v-if="pending" class="flex justify-center items-center py-20">
           <div
             class="spinner w-8 h-8 border-4 border-t-4 rounded-full animate-spin"
-            :class="
-              isDark
-                ? 'border-gray-700 border-t-[#578FCA]'
-                : 'border-gray-200 border-t-[#7091F5]'
-            "
+            :class="isDark ? 'border-gray-700 border-t-[#578FCA]' : 'border-gray-200 border-t-[#7091F5]'"
           ></div>
         </div>
 
         <div v-else>
-          <div class="flex flex-col lg:flex-row gap-8">
+          <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
             <article
               v-if="post"
-              class="flex-1 mx-auto rounded-3xl p-6 sm:p-8 md:p-10 transition-all duration-300"
+              class="flex-1 w-full lg:w-auto mx-auto rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 transition-all duration-300"
               :class="isDark ? 'bg-[#0f0f1d] shadow-2xl' : 'bg-white shadow-lg'"
             >
-              <header class="mb-8">
+              <header class="mb-6 sm:mb-8">
                 <div class="flex items-center justify-between mb-4">
                   <NuxtLink to="/blog" class="flex items-center gap-2 group">
                     <IconsArrow2
-                      class="w-5 h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1"
+                      class="w-4 sm:w-5 h-4 sm:h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1"
                       :class="isDark ? 'text-gray-400' : 'text-gray-600'"
                     />
                     <span
                       class="text-sm sm:text-base"
                       :class="isDark ? 'text-gray-400' : 'text-gray-600'"
-                      >بازگشت</span
-                    >
+                    >بازگشت</span>
                   </NuxtLink>
 
                   <div class="flex items-center gap-3">
@@ -218,13 +206,13 @@ onMounted(() => {
                 </div>
 
                 <h1
-                  class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 title-gradient"
+                  class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold mb-4 title-gradient"
                 >
                   {{ post.title }}
                 </h1>
 
                 <div
-                  class="flex flex-wrap items-center gap-4 text-sm sm:text-base"
+                  class="flex flex-wrap items-center gap-3 sm:gap-4 text-sm"
                   :class="isDark ? 'text-gray-400' : 'text-gray-600'"
                 >
                   <div class="flex items-center gap-2">
@@ -247,12 +235,8 @@ onMounted(() => {
                   <span
                     v-for="tag in post.tags"
                     :key="tag"
-                    class="px-3 py-1 rounded-full text-xs sm:text-sm flex items-center gap-1 border"
-                    :class="
-                      isDark
-                        ? 'bg-[#ffffff05] text-gray-300 border-white/10'
-                        : 'bg-gray-50 text-gray-600 border-gray-200'
-                    "
+                    class="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm flex items-center gap-1 border"
+                    :class="isDark ? 'bg-[#ffffff05] text-gray-300 border-white/10' : 'bg-gray-50 text-gray-600 border-gray-200'"
                   >
                     <IconsTag class="w-3 h-3" />
                     {{ tag }}
@@ -261,33 +245,23 @@ onMounted(() => {
               </header>
 
               <div
-                class="content-renderer prose max-w-none mb-8"
+                class="content-renderer prose prose-sm sm:prose-base lg:prose-lg max-w-none mb-6 sm:mb-8"
                 :class="isDark ? 'prose-invert text-gray-300' : 'text-gray-700'"
               >
                 <ContentRenderer :value="post" />
               </div>
 
               <div
-                class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t"
+                class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t mb-6 sm:mb-8"
                 :class="isDark ? 'border-[#ffffff20]' : 'border-gray-200'"
               >
                 <div class="flex items-center gap-2">
-                  <div
-                    class="w-10 h-10 rounded-full overflow-hidden border-2"
-                    :class="isDark ? 'border-[#7091F5]' : 'border-[#578FCA]'"
-                  >
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_zfYdfminxFt2Ymu1k-hyEz3slVvH1nZN_Yetgfk2S0WZhvybVuL5zKQ&s"
-                      alt="عکس پروفایل"
-                      class="w-full h-full object-cover"
-                    />
-                  </div>
                   <div>
                     <h3
-                      class="font-semibold"
+                      class="font-semibold text-sm sm:text-base"
                       :class="isDark ? 'text-gray-300' : 'text-gray-700'"
                     >
-                      محمد امیر
+                      {{ post?.meta?.author }}
                     </h3>
                     <p
                       class="text-xs"
@@ -298,60 +272,50 @@ onMounted(() => {
                   </div>
                 </div>
 
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 sm:gap-3">
                   <button
-                    @click="sharePost"
-                    class="flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300"
-                    :class="
-                      isDark
-                        ? 'border-[#ffffff30] hover:border-[#7091F5] text-gray-300 hover:text-[#7091F5]'
-                        : 'border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA]'
-                    "
+                    @click="toggleBookmark"
+                    class="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border transition-all duration-300 text-sm sm:text-base"
+                    :class="[
+                      isBookmarked
+                        ? 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30'
+                        : isDark
+                        ? 'text-gray-400 bg-white/5 hover:bg-white/10 border-white/10'
+                        : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10',
+                    ]"
                   >
-                    <IconsShare class="w-4 h-4" />
-                    <span class="text-sm">اشتراک‌گذاری</span>
+                    <IconsBookmark class="w-4 sm:w-5 h-4 sm:h-5" :filled="isBookmarked" />
+                    <span>{{ isBookmarked ? 'ذخیره شد' : 'ذخیره' }}</span>
                   </button>
 
                   <button
-                    @click="toggleBookmark"
-                    class="flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300"
-                    :class="
-                      isDark
-                        ? 'border-[#ffffff30] hover:border-[#7091F5] text-gray-300 hover:text-[#7091F5]'
-                        : 'border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA]'
-                    "
+                    @click="sharePost"
+                    class="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border transition-all duration-300 text-sm sm:text-base"
+                    :class="isDark ? 'text-gray-400 bg-white/5 hover:bg-white/10 border-white/10' : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10'"
                   >
-                    <IconsBookmark
-                      class="w-4 h-4"
-                      :filled="isBookmarked"
-                      :class="isBookmarked ? 'text-yellow-400' : ''"
-                    />
-                    <span class="text-sm">{{
-                      isBookmarked ? "حذف از نشان‌ها" : "نشان کردن"
-                    }}</span>
+                    <IconsShare class="w-4 sm:w-5 h-4 sm:h-5" />
+                    <span>اشتراک‌گذاری</span>
                   </button>
                 </div>
               </div>
 
-              <div class="mt-8 flex justify-start">
+              <div class="mt-6 sm:mt-8 flex justify-start">
                 <NuxtLink
                   to="/blog"
-                  class="flex items-center gap-2 px-6 py-3 rounded-full border transition-all duration-300 group"
-                  :class="
-                    isDark
-                      ? 'border-[#ffffff30] hover:border-[#7091F5] text-gray-300 hover:text-[#7091F5]'
-                      : 'border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA]'
-                  "
+                  class="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full border transition-all duration-300 group text-sm sm:text-base"
+                  :class="isDark ? 'border-[#ffffff30] hover:border-[#7091F5] text-gray-300 hover:text-[#7091F5]' : 'border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA]'"
                 >
                   <IconsArrow2
-                    class="w-5 h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1"
+                    class="w-4 sm:w-5 h-4 sm:h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1"
                   />
-                  <span class="text-sm font-medium">بازگشت به وبلاگ</span>
+                  <span class="font-medium">بازگشت به وبلاگ</span>
                 </NuxtLink>
               </div>
             </article>
 
-            <PostSidebar v-if="post" :current-post="post" />
+            <aside class="w-full lg:w-80 xl:w-96">
+              <PostSidebar :current-post="post" />
+            </aside>
 
             <p
               v-if="!post"
@@ -362,6 +326,9 @@ onMounted(() => {
             </p>
           </div>
         </div>
+        <div class="mt-8 sm:mt-12 lg:mt-16 max-w-3xl mx-auto w-full">
+          <Comments v-if="post" :post-id="slug" />
+        </div>
       </div>
     </div>
   </main>
@@ -369,27 +336,13 @@ onMounted(() => {
 
 <style scoped>
 @keyframes gradient-animation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .title-gradient {
-  background: linear-gradient(
-    45deg,
-    #7091f5,
-    #c471ed,
-    #f64f59,
-    #ffa500,
-    #098765,
-    #123456
-  );
+  background: linear-gradient(45deg, #7091f5, #c471ed, #f64f59, #ffa500, #098765, #123456);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -399,7 +352,29 @@ onMounted(() => {
 .spinner {
   border-top-color: var(--primary-light);
 }
+
 .dark .spinner {
   border-top-color: var(--primary-dark);
+}
+
+.prose {
+  @apply max-w-none;
+}
+@media (max-width: 640px) {
+  .prose {
+    font-size: 0.95rem;
+  }
+  
+  .prose h1 {
+    font-size: 1.75rem;
+  }
+  
+  .prose h2 {
+    font-size: 1.5rem;
+  }
+  
+  .prose h3 {
+    font-size: 1.25rem;
+  }
 }
 </style>

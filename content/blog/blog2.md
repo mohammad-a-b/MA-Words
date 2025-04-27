@@ -1,11 +1,12 @@
 ---
 title: "بهینه‌سازی عملکرد در Vue.js"
 date: 2010-09-17
-category: "فرانت‌اند"
+category: "توسعه وب"
 tags: ["vue", "javascript", "web", "frontend"]
 description: "در این مقاله، به بررسی تکنیک‌های مختلف بهینه‌سازی عملکرد در Vue.js می‌پردازیم."
 image: https://www.web24.ir/Uploadfiles/CkEditor/Images/blog-01.jpg
 readingTime: 7
+author: "محمد امیر برخورداری"
 ---
 
 # بهینه‌سازی عملکرد در Vue.js

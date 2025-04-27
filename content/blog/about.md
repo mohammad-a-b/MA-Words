@@ -1,15 +1,17 @@
 ---
+title: "مبانی شروع وب"
 date: 2024-12-12
 image: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmcSfj3ObecfkdtNZ04fnLB7qe74-E9Db0-w&s
-category: فرانت‌اند
+category: "توسعه وب"
 tags:
   - devops
   - backend
   - serverless
 readingTime: 4
+author: "محمد امیر برخورداری"
 ---
 
-# مبانی شروع وب1
+# مبانی شروع وب
 
 اگر تازه وارد دنیای طراحی وب شده‌اید، **HTML** و **CSS** دو زبان پایه‌ای هستند که باید با آن‌ها آشنا شوید.
 

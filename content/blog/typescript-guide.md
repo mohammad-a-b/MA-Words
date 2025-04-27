@@ -1,8 +1,9 @@
 ---
 
 title: "TypeScript: راهنمای کامل برای توسعه‌دهندگان"
+author: "محمد امیر برخورداری"
 date: 2024-03-20
-category: "بک‌اند"
+category: "توسعه وب"
 tags: ["vue","javascript","test"]
 description: "آموزش TypeScript از مفاهیم پایه تا تکنیک‌های پیشرفته برای توسعه اپلیکیشن‌های امن و قابل نگهداری"
 image: "https://cdn.nody.ir/files/2021/06/16/nody-%D8%B9%DA%A9%D8%B3-%D8%AF%D8%B1%D8%AE%D8%AA-%D8%AF%D8%B1-%D8%B2%D9%85%D8%B3%D8%AA%D8%A7%D9%86-1623819870.jpg"

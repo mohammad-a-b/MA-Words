@@ -5,7 +5,7 @@ import { useToast } from 'vue-toastification'
 const toast = useToast()
 const { $supabase } = useNuxtApp()
 
-const comments = ref([])
+const   comments = ref([])
 const loading = ref(true)
 const submitting = ref(false)
 

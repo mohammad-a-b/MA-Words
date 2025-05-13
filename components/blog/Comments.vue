@@ -141,7 +141,7 @@ const likeComment = async (commentId, currentLikes) => {
       .update({ likes: (currentLikes || 0) + 1 })
       .eq("id", commentId);
     if (error) throw error;
-    await fetchComments();
+    // await fetchComments();
   } catch (error) {
     toast.error("خطا در لایک کردن کامنت");
   }

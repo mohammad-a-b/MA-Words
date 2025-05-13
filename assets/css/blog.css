@@ -88,7 +88,14 @@
 .light .blog-bg-primary {
   background-color: var(--primary-light);
 }
-
+.smnu3,
+pre.shiki,
+.sDUX4,
+.sWKip,
+.scLti,
+.swLay {
+  font-family: monospace;
+}
 /* Responsive styles */
 @media (max-width: 640px) {
   .blog-grid {

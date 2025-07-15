@@ -2,11 +2,11 @@
 title: "آموزش React Hooks: مدیریت حالت در ری‌اکت"
 description: "در این مقاله با هوک‌های اصلی ری‌اکت و نحوه استفاده از آن‌ها برای مدیریت حالت کامپوننت‌ها آشنا خواهید شد."
 date: "2024-03-16"
-tags: ["ری‌اکت", "جاوااسکریپت", "فرانت‌اند", "هوک‌ها"]
+tags: ["react", "javascript", "frontend",]
 category: "توسعه وب"
-image: "https://wallup.net/wp-content/uploads/2016/05/15/32558-wireframe-CGI-skull-fire-rose-vectors-lines-blue_background-748x421.jpg"
+image: https://images.unsplash.com/photo-1615321771528-1426355a8927?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 readingTime: 10
-author: "GHOLI"
+author: "علی"
 ---
 
 # آموزش React Hooks

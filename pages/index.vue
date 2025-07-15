@@ -19,10 +19,9 @@ onMounted(() => {
           </p>
         </div>
 
-        <div class="max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300 leading-relaxed backdrop-blur-sm bg-white/50 dark:bg-gray-800/50 p-6 rounded-2xl shadow-xl">
+        <div class="max-w-2xl mx-auto text-xl text-gray-700 dark:text-gray-200 leading-loose backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 p-6 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 transition duration-300">
           <p>
-            به وبلاگ من خوش آمدید. اینجا درباره تجربیاتم در توسعه وب، یادگیری
-            ماشین و تکنولوژی‌های جدید می‌نویسم.
+            این وبلاگ جایی‌ست برای اشتراک‌گذاری تجربه‌ها و یادداشت‌هایی درباره‌ی توسعه وب، ابزارهای مدرن برنامه‌نویسی، و مفاهیمی که در مسیر یادگیری و ساخت پروژه‌های واقعی با آن‌ها روبه‌رو می‌شوم.
           </p>
         </div>
 

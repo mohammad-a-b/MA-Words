@@ -27,8 +27,8 @@ const totalCategories = computed(() => blogStore.allCategories.length);
       "
       style="font-size: clamp(2rem, 8vw, 4.5rem); line-height: 1.2"
     >
-      وبلاگ
-      <span :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'">من</span>
+      دنیای
+      <span :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'">یادگیری</span>
     </h1>
 
    

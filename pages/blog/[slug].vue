@@ -326,7 +326,7 @@ onMounted(() => {
             </p>
           </div>
         </div>
-        <div class="mt-8 sm:mt-12 lg:mt-16 max-w-3xl mx-auto w-full">
+        <div class="mt-8 sm:mt-12 lg:mt-16 max-w-3xl w-full">
           <Comments v-if="post" :post-id="slug" />
         </div>
       </div>

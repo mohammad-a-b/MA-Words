@@ -2,10 +2,10 @@
 title: "آموزش مقدماتی جاوااسکریپت: مفاهیم پایه"
 description: "در این مقاله با مفاهیم اولیه و پایه‌ای زبان برنامه‌نویسی جاوااسکریپت آشنا خواهید شد."
 date: "2024-03-15"
-tags: ["جاوااسکریپت", "فرانت‌اند", "برنامه‌نویسی"]
+tags: ["javascript", "frontend"]
 category: "توسعه وب"
 subcategory: "جاوااسکریپت"
-image: "https://wallup.net/wp-content/uploads/2016/05/15/32558-wireframe-CGI-skull-fire-rose-vectors-lines-blue_background-748x421.jpg"
+image: https://images.unsplash.com/photo-1623479322729-28b25c16b011?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 readingTime: 8
 author: "محمد امیر برخورداری"
 ---

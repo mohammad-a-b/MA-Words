@@ -4,7 +4,7 @@ date: 2010-09-17
 category: "توسعه وب"
 tags: ["vue", "javascript", "web", "frontend"]
 description: "در این مقاله، به بررسی تکنیک‌های مختلف بهینه‌سازی عملکرد در Vue.js می‌پردازیم."
-image: https://www.web24.ir/Uploadfiles/CkEditor/Images/blog-01.jpg
+image: https://images.unsplash.com/photo-1529078155058-5d716f45d604?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 readingTime: 7
 author: "محمد امیر برخورداری"
 ---

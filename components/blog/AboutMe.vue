@@ -80,7 +80,7 @@ const skills = [
           class="text-xl sm:text-2xl md:text-3xl font-bold"
           :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
         >
-          محمد امیر برخورداری
+          <!-- محمد امیر برخورداری -->
         </h2>
         <p
           class="text-sm sm:text-base"
@@ -94,9 +94,9 @@ const skills = [
         class="max-w-2xl text-sm sm:text-base leading-relaxed"
         :class="isDark ? 'text-gray-300' : 'text-gray-600'"
       >
-        سلام، من محمد امیر هستم؛ توسعه‌دهنده و نویسنده محتوا. در این وبلاگ
+        سلام، ما توسعه‌دهنده و نویسنده محتوا هستیم. در این وبلاگ
         تجربیات، نکات و مطالب مفیدی در زمینه برنامه‌نویسی و فناوری را به اشتراک
-        می‌گذارم. هدف من الهام‌بخشی و کمک به رشد ایده‌های نو است.
+        می‌گذاریم. هدف ما الهام‌بخشی و کمک به رشد ایده‌های نو است.
       </p>
 
       <div class="flex flex-wrap justify-center gap-2 max-w-2xl">

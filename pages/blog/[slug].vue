@@ -17,7 +17,6 @@ const { data: allPosts } = await useAsyncData("blog-posts", () =>
   queryCollection("blog").order("date", "DESC").all()
 );
 
-
 watch(
   allPosts,
   (newPosts) => {
@@ -83,37 +82,53 @@ const copyLink = () => {
   navigator.clipboard.writeText(window.location.href);
   showShareMenu.value = false;
 };
-
 onMounted(() => {
-  window.addEventListener("scroll", () => {
+  const onScroll = () => {
     const article = document.querySelector("article");
-    if (article) {
-      const articleTop = article.getBoundingClientRect().top;
-      const articleHeight = article.offsetHeight;
-      const windowHeight = window.innerHeight;
-      const progress = Math.min(
-        100,
-        Math.max(0, ((windowHeight - articleTop) / articleHeight) * 100)
-      );
-      readingProgress.value = progress;
+    if (!article) {
+      readingProgress.value = 0;
+      return;
     }
+
+    const rect = article.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    const totalHeight = rect.height - windowHeight;
+    const scrolled = Math.min(Math.max(-rect.top, 0), totalHeight);
+
+    readingProgress.value = totalHeight > 0 ? (scrolled / totalHeight) * 100 : 100;
+  };
+
+  window.addEventListener("scroll", onScroll);
+  window.addEventListener("resize", onScroll);
+  onScroll();
+
+  onUnmounted(() => {
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", onScroll);
   });
 });
+
+
 </script>
 
 <template>
   <main class="min-h-screen transition-colors duration-300">
     <div
-      class="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#7091F5] to-[#578FCA] z-50"
+      class="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#7091F5] to-[#5591d0] z-50"
       :style="{ width: `${readingProgress}%` }"
     ></div>
 
     <div class="relative min-h-screen">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
+      <div class="container mx-auto px-0 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
         <div v-if="pending" class="flex justify-center items-center py-20">
           <div
             class="spinner w-8 h-8 border-4 border-t-4 rounded-full animate-spin"
-            :class="isDark ? 'border-gray-700 border-t-[#578FCA]' : 'border-gray-200 border-t-[#7091F5]'"
+            :class="
+              isDark
+                ? 'border-gray-700 border-t-[#578FCA]'
+                : 'border-gray-200 border-t-[#7091F5]'
+            "
           ></div>
         </div>
 
@@ -121,7 +136,7 @@ onMounted(() => {
           <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
             <article
               v-if="post"
-              class="flex-1 w-full lg:w-auto mx-auto rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 transition-all duration-300"
+              class="flex-1 w-full lg:w-auto mx-auto rounded-2xl sm:rounded-3xl p-2.5 sm:p-6 md:p-8 transition-all duration-300"
               :class="isDark ? 'bg-[#0f0f1d] shadow-2xl' : 'bg-white shadow-lg'"
             >
               <header class="mb-6 sm:mb-8">
@@ -134,7 +149,8 @@ onMounted(() => {
                     <span
                       class="text-sm sm:text-base"
                       :class="isDark ? 'text-gray-400' : 'text-gray-600'"
-                    >بازگشت</span>
+                      >بازگشت</span
+                    >
                   </NuxtLink>
 
                   <div class="flex items-center gap-3">
@@ -236,7 +252,11 @@ onMounted(() => {
                     v-for="tag in post.tags"
                     :key="tag"
                     class="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm flex items-center gap-1 border"
-                    :class="isDark ? 'bg-[#ffffff05] text-gray-300 border-white/10' : 'bg-gray-50 text-gray-600 border-gray-200'"
+                    :class="
+                      isDark
+                        ? 'bg-[#ffffff05] text-gray-300 border-white/10'
+                        : 'bg-gray-50 text-gray-600 border-gray-200'
+                    "
                   >
                     <IconsTag class="w-3 h-3" />
                     {{ tag }}
@@ -272,7 +292,7 @@ onMounted(() => {
                   </div>
                 </div>
 
-                <div class="flex items-center gap-2 sm:gap-3">
+               <div class="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-3">
                   <button
                     @click="toggleBookmark"
                     class="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border transition-all duration-300 text-sm sm:text-base"
@@ -284,14 +304,21 @@ onMounted(() => {
                         : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10',
                     ]"
                   >
-                    <IconsBookmark class="w-4 sm:w-5 h-4 sm:h-5" :filled="isBookmarked" />
-                    <span>{{ isBookmarked ? 'ذخیره شد' : 'ذخیره' }}</span>
+                    <IconsBookmark
+                      class="w-4 sm:w-5 h-4 sm:h-5"
+                      :filled="isBookmarked"
+                    />
+                    <span>{{ isBookmarked ? "ذخیره شد" : "ذخیره" }}</span>
                   </button>
 
                   <button
                     @click="sharePost"
                     class="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border transition-all duration-300 text-sm sm:text-base"
-                    :class="isDark ? 'text-gray-400 bg-white/5 hover:bg-white/10 border-white/10' : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10'"
+                    :class="
+                      isDark
+                        ? 'text-gray-400 bg-white/5 hover:bg-white/10 border-white/10'
+                        : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10'
+                    "
                   >
                     <IconsShare class="w-4 sm:w-5 h-4 sm:h-5" />
                     <span>اشتراک‌گذاری</span>
@@ -303,7 +330,11 @@ onMounted(() => {
                 <NuxtLink
                   to="/blog"
                   class="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full border transition-all duration-300 group text-sm sm:text-base"
-                  :class="isDark ? 'border-[#ffffff30] hover:border-[#7091F5] text-gray-300 hover:text-[#7091F5]' : 'border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA]'"
+                  :class="
+                    isDark
+                      ? 'border-[#ffffff30] hover:border-[#7091F5] text-gray-300 hover:text-[#7091F5]'
+                      : 'border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA]'
+                  "
                 >
                   <IconsArrow2
                     class="w-4 sm:w-5 h-4 sm:h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1"
@@ -336,13 +367,27 @@ onMounted(() => {
 
 <style scoped>
 @keyframes gradient-animation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .title-gradient {
-  background: linear-gradient(45deg, #7091f5, #c471ed, #f64f59, #ffa500, #098765, #123456);
+  background: linear-gradient(
+    45deg,
+    #7091f5,
+    #c471ed,
+    #f64f59,
+    #ffa500,
+    #098765,
+    #123456
+  );
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -364,15 +409,15 @@ onMounted(() => {
   .prose {
     font-size: 0.95rem;
   }
-  
+
   .prose h1 {
     font-size: 1.75rem;
   }
-  
+
   .prose h2 {
     font-size: 1.5rem;
   }
-  
+
   .prose h3 {
     font-size: 1.25rem;
   }

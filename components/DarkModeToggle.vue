@@ -14,16 +14,16 @@ const toggleDark = useToggle(isDark);
 <template>
   <button
     @click="toggleDark()"
-    class="fixed top-4 right-4 z-[9999] p-3 rounded-full backdrop-blur-lg border transition-all duration-500 shadow-xl hover:scale-110"
+    class="p-3 rounded-full backdrop-blur-lg border transition-all duration-500 shadow-lg hover:shadow-xl hover:scale-110"
     :class="
       isDark
-        ? 'border-[#ffffffab] hover:border-[#4d6c6482] bg-[#00000030]'
-        : 'border-[#000000ab] hover:border-[#182a2381] bg-[#ffffff20]'
+        ? 'border-[#ffffff15] hover:border-[#578FCA] bg-[#1a1a2e]/90 text-gray-200 hover:text-[#578FCA]'
+        : 'border-[#00000015] hover:border-[#7091F5] bg-white/90 text-gray-700 hover:text-[#7091F5]'
     "
   >
     <div class="relative w-6 h-6">
-      <IconsMoon v-show="isDark"></IconsMoon>
-      <IconsSun v-show="!isDark"></IconsSun>
+      <IconsMoon v-show="isDark" class="w-6 h-6" />
+      <IconsSun v-show="!isDark" class="w-6 h-6" />
     </div>
   </button>
 </template>

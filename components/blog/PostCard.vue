@@ -37,7 +37,7 @@ const handleToggleBookmark = (event) => {
 <template>
   <article
     v-if="layout === 'grid'"
-    class="group rounded-xl sm:rounded-2xl p-3 sm:p-3 transition-all duration-300 relative flex flex-col border hover:shadow-lg blog-post-card"
+    class="group rounded-xl sm:rounded-2xl p-2 sm:p-3 transition-all duration-300 relative flex flex-col border hover:shadow-lg blog-post-card"
     :class="
       isDark
         ? 'bg-[#0f0f1d] border-[#ffffff10] hover:border-[#578FCA]/20'
@@ -46,7 +46,7 @@ const handleToggleBookmark = (event) => {
   >
     <NuxtLink :to="post.path" class="relative block">
       <div
-        class="relative h-36 xs:h-40 sm:h-48 md:h-56 mb-3 sm:mb-4 rounded-lg sm:rounded-xl overflow-hidden image-overlay"
+        class="relative h-32 xs:h-36 sm:h-40 md:h-48 mb-2 sm:mb-3 rounded-lg sm:rounded-xl overflow-hidden image-overlay"
       >
         <img
           v-if="post.meta?.image"
@@ -55,20 +55,20 @@ const handleToggleBookmark = (event) => {
           class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
         />
         <div
-          class="absolute bottom-2 right-2 flex items-center gap-1.5 sm:gap-2 flex-wrap"
+          class="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 flex items-center gap-1 sm:gap-1.5 flex-wrap"
         >
           <span
-            class="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-[10px] xs:text-xs text-white/90 bg-[#00000090] backdrop-blur-sm flex items-center gap-1"
+            class="px-1 sm:px-1.5 py-0.5 rounded-full text-[9px] xs:text-[10px] sm:text-xs text-white/90 bg-[#00000090] backdrop-blur-sm flex items-center gap-0.5 sm:gap-1"
           >
-            <IconsCalendar class="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+            <IconsCalendar class="w-2 h-2 sm:w-2.5 sm:h-2.5" />
             {{ formatDate(post.date) }}
           </span>
           <span
-            class="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-[10px] xs:text-xs text-white/90 bg-[#00000090] backdrop-blur-sm flex items-center gap-1"
+            class="px-1 sm:px-1.5 py-0.5 rounded-full text-[9px] xs:text-[10px] sm:text-xs text-white/90 bg-[#00000090] backdrop-blur-sm flex items-center gap-0.5 sm:gap-1"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="w-2.5 h-2.5 sm:w-3 sm:h-3"
+              class="w-2 h-2 sm:w-2.5 sm:h-2.5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -86,12 +86,12 @@ const handleToggleBookmark = (event) => {
       </div>
     </NuxtLink>
 
-    <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center justify-between mb-1.5 sm:mb-2">
       <BlogTag
         v-if="post.meta?.category"
         :text="post.meta.category"
         :show-icon="false"
-        class="category-tag px-2 py-1 rounded-lg"
+        class="category-tag px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm"
         :class="
           isDark
             ? 'bg-gradient-to-r from-[#6366f1] to-[#4f46e5] text-white'
@@ -101,7 +101,7 @@ const handleToggleBookmark = (event) => {
 
       <button
         @click="handleToggleBookmark"
-        class="bookmark-btn p-1.5 rounded-full transition-all duration-300 hover:scale-110 hover:rotate-6 z-10 shadow-sm border"
+        class="bookmark-btn p-1 sm:p-1.5 rounded-full transition-all duration-300 hover:scale-110 hover:rotate-6 z-10 shadow-sm border"
         :class="[
           isBookmarked
             ? 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30'
@@ -110,18 +110,18 @@ const handleToggleBookmark = (event) => {
             : 'text-gray-500 bg-black/5 hover:bg-black/10 border-black/10 hover:border-black/20',
         ]"
       >
-        <IconsBookmark class="w-4 h-4" :filled="isBookmarked" />
+        <IconsBookmark class="w-3.5 h-3.5 sm:w-4 sm:h-4" :filled="isBookmarked" />
       </button>
     </div>
 
     <h2
-      class="text-sm xs:text-base sm:text-lg md:text-xl font-bold mb-2 transition-all duration-300 line-clamp-2 group-hover:text-[#85a4ffc3]"
+      class="text-xs xs:text-sm sm:text-base md:text-lg font-bold mb-1.5 sm:mb-2 transition-all duration-300 line-clamp-2 group-hover:text-[#85a4ffc3]"
     >
       {{ post.title }}
     </h2>
 
     <p
-      class="mb-3 sm:mb-4 text-xs sm:text-sm line-clamp-3 text-justify"
+      class="mb-2 sm:mb-3 text-[10px] xs:text-xs sm:text-sm line-clamp-3 text-justify"
       :class="isDark ? 'text-gray-300/90' : 'text-gray-600/90'"
     >
       {{ post.description || "..." }}
@@ -129,7 +129,7 @@ const handleToggleBookmark = (event) => {
 
     <div
       v-if="post.tags?.length"
-      class="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4"
+      class="flex flex-wrap gap-1 sm:gap-1.5 mb-2 sm:mb-3"
     >
       <BlogTag v-for="tag in post.tags.slice(0, 3)" :key="tag" :text="tag" />
       <BlogTag

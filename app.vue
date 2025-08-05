@@ -2,8 +2,12 @@
 <template>
   <ClientOnly>
     <NuxtLayout>
-      <div class="container mx-auto px-4">
-        <DarkModeToggle />
+      <div class="container mx-auto px-2 sm:px-4">
+        <div class="fixed top-4 right-4 z-[9999] flex items-center gap-3">
+          <DarkModeToggle />
+          <UserMenu />
+          <LoginButton />
+        </div>
         <NuxtPage />
       </div>
     </NuxtLayout>

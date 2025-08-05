@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   modules: ["@nuxt/content", "@vueuse/nuxt", "@nuxtjs/google-fonts"],
 
   build: {
-    transpile: ['vue-toastification'],
+    transpile: ['vue-toastification', '@vuelidate/core', '@vuelidate/validators'],
   },
 
   css: [

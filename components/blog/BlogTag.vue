@@ -32,7 +32,7 @@ const handleClick = () => {
 <template>
   <button
     @click="handleClick"
-    class="rounded-full text-xs sm:text-sm flex items-center gap-1 sm:gap-2 group border transition-all duration-200 blog-tag-button"
+    class="rounded-full text-[10px] xs:text-xs sm:text-sm flex items-center gap-0.5 sm:gap-1 group border transition-all duration-200 blog-tag-button"
     :class="[
       active
         ? isDark
@@ -41,12 +41,12 @@ const handleClick = () => {
         : isDark
         ? 'bg-[#ffffff05] text-gray-300 hover:bg-[#ffffff10] border-white/10'
         : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border-gray-200',
-      $attrs.class || 'px-2 sm:px-3 py-1 sm:py-1.5'
+      $attrs.class || 'px-1.5 sm:px-2 py-0.5 sm:py-1'
     ]"
   >
     <IconsTag
       v-if="showIcon"
-      class="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:scale-110"
+      class="w-2.5 h-2.5 sm:w-3 sm:h-3 transition-transform duration-300 group-hover:scale-110"
     />
     <slot>{{ text }}</slot>
   </button>

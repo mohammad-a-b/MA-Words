@@ -7,6 +7,21 @@ export const useAuth = () => {
     user.value = data.user
   }
 
+  const logout = async () => {
+    try {
+      const { error } = await $supabase.auth.signOut()
+      if (error) {
+        console.error('Logout error:', error)
+        return { success: false, error: error.message }
+      }
+      user.value = null
+      return { success: true }
+    } catch (error) {
+      console.error('Logout error:', error)
+      return { success: false, error: error.message }
+    }
+  }
+
   onMounted(() => {
     fetchUser()
     $supabase.auth.onAuthStateChange((_event, session) => {
@@ -14,5 +29,5 @@ export const useAuth = () => {
     })
   })
 
-  return { user }
+  return { user, logout }
 }

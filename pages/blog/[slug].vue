@@ -115,7 +115,7 @@ onMounted(() => {
 <template>
   <main class="min-h-screen transition-colors duration-300">
     <div
-      class="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#7091F5] to-[#5591d0] z-50"
+      class="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--gradient-brand-from)] to-[var(--gradient-brand-to)] z-50"
       :style="{ width: `${readingProgress}%` }"
     ></div>
 
@@ -222,7 +222,7 @@ onMounted(() => {
                 </div>
 
                 <h1
-                  class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold mb-4 title-gradient"
+                  class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold mb-4 bg-gradient-to-r from-[var(--gradient-brand-from)] to-[var(--gradient-brand-to)] bg-clip-text text-transparent"
                 >
                   {{ post.title }}
                 </h1>

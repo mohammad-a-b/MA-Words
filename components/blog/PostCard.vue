@@ -66,20 +66,7 @@ const handleToggleBookmark = (event) => {
           <span
             class="px-1 sm:px-1.5 py-0.5 rounded-full text-[9px] xs:text-[10px] sm:text-xs text-white/90 bg-[#00000090] backdrop-blur-sm flex items-center gap-0.5 sm:gap-1"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-2 h-2 sm:w-2.5 sm:h-2.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+            <IconsClock class="w-2 h-2 sm:w-2.5 sm:h-2.5" />
             {{ calculateReadingTime(post) }} دقیقه
           </span>
         </div>

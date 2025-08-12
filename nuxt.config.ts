@@ -13,6 +13,9 @@ export default defineNuxtConfig({
         lang: "fa-IR",
         dir: "rtl",
       },
+      meta: [
+        { name: 'color-scheme', content: 'light dark' },
+      ],
     },
   },
 

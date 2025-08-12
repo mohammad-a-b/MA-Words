@@ -77,18 +77,13 @@ onMounted(() => {
       <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm shadow-lg">
         {{ user.email?.charAt(0).toUpperCase() }}
       </div>
-      <svg
+      <IconsChevronDown
         class="w-4 h-4 transition-transform duration-300"
         :class="[
           isMenuOpen ? 'rotate-180' : 'rotate-0',
           isDark ? 'text-gray-300' : 'text-gray-600'
         ]"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
+      />
     </button>
 
     <Transition
@@ -125,6 +120,20 @@ onMounted(() => {
         </div>
 
         <div class="p-3">
+          <NuxtLink
+            to="/profile"
+            class="mb-2 w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all duration-300 hover:scale-[1.02]"
+            :class="
+              isDark
+                ? 'text-gray-200 hover:bg-white/5'
+                : 'text-gray-700 hover:bg-gray-50'
+            "
+            @click="isMenuOpen = false"
+          >
+            <IconsUser class="w-5 h-5 flex-shrink-0" />
+            <span class="flex-1 font-medium">پروفایل</span>
+          </NuxtLink>
+
           <button
             @click="handleLogout"
             :disabled="isLoggingOut"
@@ -135,19 +144,7 @@ onMounted(() => {
                 : 'text-red-600 hover:bg-red-50 hover:text-red-700'
             "
           >
-            <svg
-              class="w-5 h-5 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
+            <IconsLogout class="w-5 h-5 flex-shrink-0" />
             <span class="flex-1 font-medium">
               {{ isLoggingOut ? 'در حال خروج...' : 'خروج از حساب' }}
             </span>

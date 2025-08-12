@@ -33,7 +33,18 @@ export const useAuthValidation = () => {
 
   const getValidationRules = (isSignup = false) => ({
     email: getEmailRules(),
-    password: getPasswordRules(isSignup)
+    password: getPasswordRules(isSignup),
+    ...(isSignup
+      ? {
+          confirmPassword: {
+            required: helpers.withMessage('تکرار رمز عبور الزامی است', required),
+            sameAsPassword: helpers.withMessage(
+              'رمز عبور و تکرار آن مطابقت ندارند',
+              (value, vm) => value === vm.password
+            )
+          }
+        }
+      : {})
   })
 
   return {

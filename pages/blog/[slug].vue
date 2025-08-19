@@ -142,7 +142,7 @@ onMounted(() => {
               <header class="mb-6 sm:mb-8">
                 <div class="flex items-center justify-between mb-4">
                   <NuxtLink to="/blog" class="flex items-center gap-2 group">
-                    <IconsArrow2
+                    <LucideArrowLeft
                       class="w-4 sm:w-5 h-4 sm:h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1"
                       :class="isDark ? 'text-gray-400' : 'text-gray-600'"
                     />
@@ -161,9 +161,8 @@ onMounted(() => {
                         isDark ? 'hover:bg-[#ffffff10]' : 'hover:bg-gray-100'
                       "
                     >
-                      <IconsBookmark
+                      <LucideBookmark
                         class="w-5 h-5"
-                        :filled="isBookmarked"
                         :class="
                           isBookmarked
                             ? 'text-yellow-400'
@@ -182,7 +181,7 @@ onMounted(() => {
                           isDark ? 'hover:bg-[#ffffff10]' : 'hover:bg-gray-100'
                         "
                       >
-                        <IconsShare
+                        <LucideShare2
                           class="w-5 h-5"
                           :class="isDark ? 'text-gray-400' : 'text-gray-600'"
                         />
@@ -206,7 +205,7 @@ onMounted(() => {
                               : 'hover:bg-gray-100'
                           "
                         >
-                          <IconsCopy
+                          <LucideCopy
                             class="w-4 h-4"
                             :class="isDark ? 'text-gray-400' : 'text-gray-600'"
                           />
@@ -232,17 +231,17 @@ onMounted(() => {
                   :class="isDark ? 'text-gray-400' : 'text-gray-600'"
                 >
                   <div class="flex items-center gap-2">
-                    <IconsCalendar class="w-4 h-4" />
+                    <LucideCalendar class="w-4 h-4" />
                     <span>{{ formatDate(post.date) }}</span>
                   </div>
 
                   <div class="flex items-center gap-2">
-                    <IconsClock class="w-4 h-4" />
+                    <LucideClock3 class="w-4 h-4" />
                     <span>{{ calculateReadingTime(post) }} دقیقه مطالعه</span>
                   </div>
 
                   <div class="flex items-center gap-2">
-                    <IconsCategory class="w-4 h-4" />
+                    <LucideGrid2x2 class="w-4 h-4" />
                     <span>{{ post.meta?.category }}</span>
                   </div>
                 </div>
@@ -258,7 +257,7 @@ onMounted(() => {
                         : 'bg-gray-50 text-gray-600 border-gray-200'
                     "
                   >
-                    <IconsTag class="w-3 h-3" />
+                    <LucideTag class="w-3 h-3" />
                     {{ tag }}
                   </span>
                 </div>
@@ -304,9 +303,8 @@ onMounted(() => {
                         : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10',
                     ]"
                   >
-                    <IconsBookmark
+                    <LucideBookmark
                       class="w-4 sm:w-5 h-4 sm:h-5"
-                      :filled="isBookmarked"
                     />
                     <span>{{ isBookmarked ? "ذخیره شد" : "ذخیره" }}</span>
                   </button>
@@ -320,7 +318,7 @@ onMounted(() => {
                         : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10'
                     "
                   >
-                    <IconsShare class="w-4 sm:w-5 h-4 sm:h-5" />
+                    <LucideShare2 class="w-4 sm:w-5 h-4 sm:h-5" />
                     <span>اشتراک‌گذاری</span>
                   </button>
                 </div>
@@ -336,7 +334,7 @@ onMounted(() => {
                       : 'border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA]'
                   "
                 >
-                  <IconsArrow2
+                  <LucideArrowLeft
                     class="w-4 sm:w-5 h-4 sm:h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1"
                   />
                   <span class="font-medium">بازگشت به وبلاگ</span>

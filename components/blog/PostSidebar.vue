@@ -1,8 +1,6 @@
 <script setup>
 import { useBlogStore } from "~/stores/blog";
 import { useDark } from "@vueuse/core";
-import IconsRelated from "~/components/icons/Related.vue";
-import IconsCalendar from "~/components/icons/Calendar.vue";
 
 const blogStore = useBlogStore();
 const isDark = useDark({
@@ -65,7 +63,7 @@ watch(allPosts, () => {
         :class="isDark ? 'text-gray-100' : 'text-gray-800'"
       >
         <div class="flex items-center gap-3">
-          <IconsRelated
+          <LucideGitPullRequestArrow
             class="w-5 h-5"
             :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
           />
@@ -110,7 +108,7 @@ watch(allPosts, () => {
               class="flex items-center gap-2 text-[11px]"
               :class="isDark ? 'text-gray-400' : 'text-gray-500'"
             >
-              <IconsCalendar class="w-3.5 h-3.5" />
+              <LucideCalendar class="w-3.5 h-3.5" />
               <span>{{ formatDate(post.date) }}</span>
             </div>
           </NuxtLink>

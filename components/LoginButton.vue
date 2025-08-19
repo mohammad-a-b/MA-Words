@@ -29,7 +29,7 @@ const openLoginModal = () => {
             : 'border-[#00000015] hover:border-[#7091F5] bg-white/90 text-gray-700 hover:text-[#7091F5]'
         "
       >
-        <IconsUser class="w-5 h-5" />
+        <LucideUserRound class="w-5 h-5" />
         <span>ورود</span>
       </button>
     </div>

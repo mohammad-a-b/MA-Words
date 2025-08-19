@@ -44,7 +44,7 @@ const handleClick = () => {
       $attrs.class || 'px-1.5 sm:px-2 py-0.5 sm:py-1'
     ]"
   >
-    <IconsTag
+    <LucideTag
       v-if="showIcon"
       class="w-2.5 h-2.5 sm:w-3 sm:h-3 transition-transform duration-300 group-hover:scale-110"
     />

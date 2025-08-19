@@ -22,8 +22,8 @@ const toggleDark = useToggle(isDark);
     "
   >
     <div class="relative w-6 h-6">
-      <IconsMoon v-show="isDark" class="w-6 h-6" />
-      <IconsSun v-show="!isDark" class="w-6 h-6" />
+      <LucideMoon v-show="isDark" class="w-6 h-6" />
+      <LucideSun v-show="!isDark" class="w-6 h-6" />
     </div>
   </button>
 </template>

@@ -9,7 +9,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     pauseOnFocusLoss: true,
     pauseOnHover: true,
     draggable: true,
-    draggablePercent: 0.6,
+    draggablePercent: 0.6,  
     showCloseButtonOnHover: false,
     hideProgressBar: false,
     closeButton: false,
@@ -17,8 +17,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     rtl: true,
     maxToasts: 5,
     newestOnTop: true,
-    containerClassName: "my-toast-container",
-    toastClassName: "my-toast-class",
-    bodyClassName: "my-toast-body",
+    containerClassName: "ontainer",
+    toastClassName: "ontainer",
+    bodyClassName: "ontainer",
   });
 }); 

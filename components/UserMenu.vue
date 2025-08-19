@@ -77,7 +77,7 @@ onMounted(() => {
       <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm shadow-lg">
         {{ user.email?.charAt(0).toUpperCase() }}
       </div>
-      <IconsChevronDown
+      <LucideChevronDown
         class="w-4 h-4 transition-transform duration-300"
         :class="[
           isMenuOpen ? 'rotate-180' : 'rotate-0',
@@ -130,7 +130,7 @@ onMounted(() => {
             "
             @click="isMenuOpen = false"
           >
-            <IconsUser class="w-5 h-5 flex-shrink-0" />
+            <LucideUser class="w-5 h-5 flex-shrink-0" />
             <span class="flex-1 font-medium">پروفایل</span>
           </NuxtLink>
 
@@ -144,7 +144,7 @@ onMounted(() => {
                 : 'text-red-600 hover:bg-red-50 hover:text-red-700'
             "
           >
-            <IconsLogout class="w-5 h-5 flex-shrink-0" />
+            <LucideLogOut class="w-5 h-5 flex-shrink-0" />
             <span class="flex-1 font-medium">
               {{ isLoggingOut ? 'در حال خروج...' : 'خروج از حساب' }}
             </span>

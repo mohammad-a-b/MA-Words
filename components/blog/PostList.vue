@@ -56,7 +56,7 @@ const isDark = useDark({
       class="text-center py-8 sm:py-12 animate-fadeIn"
       :class="isDark ? 'text-gray-400' : 'text-gray-500'"
     >
-      <IconsEmpty
+      <LucideCircleOff
         class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4"
         :class="isDark ? 'text-gray-600' : 'text-gray-400'"
       />
@@ -97,7 +97,7 @@ const isDark = useDark({
             currentPage === 1 ? 'opacity-50 cursor-not-allowed hover:scale-100' : ''
           ]"
         >
-          <IconsArrow class="h-5 w-5 rotate-180" />
+          <LucideArrowLeft class="h-5 w-5" />
           قبلی
         </button>
 
@@ -139,7 +139,7 @@ const isDark = useDark({
           ]"
         >
           بعدی
-          <IconsArrow class="h-5 w-5" />
+          <LucideArrowRight class="h-5 w-5" />
         </button>
       </div>
     </template>

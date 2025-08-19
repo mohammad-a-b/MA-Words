@@ -39,11 +39,11 @@ const totalCategories = computed(() => blogStore.allCategories.length);
 
     <div class="mt-6 flex justify-center gap-8 text-sm sm:text-base">
       <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-        <IconsCategory :class="isDark ? 'text-gray-300' : 'text-gray-700'" class="w-5 h-5" />
+        <LucideChartBarStacked :class="isDark ? 'text-gray-300' : 'text-gray-700'" class="w-5 h-5" />
         <span :class="isDark ? 'text-gray-300' : 'text-gray-700'">{{ totalPosts }} پست</span>
       </div>
       <div  class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-        <IconsTag :class="isDark ? 'text-gray-300' : 'text-gray-700'" class="w-5 h-5" />
+        <LucideTag :class="isDark ? 'text-gray-300' : 'text-gray-700'" class="w-5 h-5" />
         <span :class="isDark ? 'text-gray-300' : 'text-gray-700'">{{ totalCategories }} دسته‌بندی</span>
       </div>
     </div>

@@ -1,15 +1,32 @@
 @import "tailwindcss";
 
-@theme{
+@theme {
   --font-sans: "Vazirmatn", "sans-serif";
 }
-*{
-  font-family: 'Vazirmatn', sans-serif;
+
+:root {
+  color-scheme: light;
 }
-button{
+.dark {
+  color-scheme: dark;
+}
+
+* {
+  font-family: "Vazirmatn", sans-serif;
+}
+button {
   cursor: pointer;
   outline: none;
 }
-.shiki{
-    direction: ltr;
+.shiki {
+  direction: ltr;
+}
+
+
+
+.ontainer{
+  padding: 5px !important;
+  width: 100px !important;
+  display: flex !important;
+  align-items: center !important;
 }

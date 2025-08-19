@@ -51,7 +51,7 @@ const handleShowAllTagsClick = () => {
                   : 'bg-white text-gray-800 border-[#00000020] focus:border-[#7091F5]'
               "
             />
-            <IconsSearch
+            <LucideSearch
               class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5"
               :class="isDark ? 'text-gray-400' : 'text-gray-500'"
             />
@@ -77,7 +77,7 @@ const handleShowAllTagsClick = () => {
             <div
               class="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
             >
-              <IconsArrow
+              <LucideChevronDown
                 class="w-4 h-4 transform rotate-90"
                 :class="isDark ? 'text-gray-400' : 'text-gray-500'"
               />
@@ -90,13 +90,13 @@ const handleShowAllTagsClick = () => {
               @click="handleViewTypeClick('grid')" 
               class="p-2 transition-colors duration-300"
               :class="blogStore.viewType === 'grid' ? (isDark ? 'bg-[#7091F5]' : 'bg-[#578FCA]') : (isDark ? 'hover:bg-[#ffffff10]' : 'hover:bg-gray-100')">
-              <IconsViewGrid class="w-4 h-4" :class="blogStore.viewType === 'grid' ? 'text-white' : (isDark ? 'text-gray-400' : 'text-gray-600')" />
+              <LucideGrid2x2 class="w-4 h-4" :class="blogStore.viewType === 'grid' ? 'text-white' : (isDark ? 'text-gray-400' : 'text-gray-600')" />
             </button>
             <button 
               @click="handleViewTypeClick('list')" 
               class="p-2 transition-colors duration-300"
               :class="blogStore.viewType === 'list' ? (isDark ? 'bg-[#7091F5]' : 'bg-[#578FCA]') : (isDark ? 'hover:bg-[#ffffff10]' : 'hover:bg-gray-100')">
-              <IconsViewList class="w-4 h-4" :class="blogStore.viewType === 'list' ? 'text-white' : (isDark ? 'text-gray-400' : 'text-gray-600')" />
+              <LucideList class="w-4 h-4" :class="blogStore.viewType === 'list' ? 'text-white' : (isDark ? 'text-gray-400' : 'text-gray-600')" />
             </button>
           </div>
         </div>
@@ -104,7 +104,7 @@ const handleShowAllTagsClick = () => {
 
       <div class="flex flex-col gap-3 sm:gap-4">
         <div class="flex items-center gap-2">
-          <IconsCategory
+          <LucideGrid2x2
             class="w-4 h-4 sm:w-5 sm:h-5"
             :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
           />
@@ -129,7 +129,7 @@ const handleShowAllTagsClick = () => {
 
       <div class="flex flex-col gap-3 sm:gap-4">
         <div class="flex items-center gap-2">
-          <IconsTag
+          <LucideTag
             class="w-4 h-4 sm:w-5 sm:h-5"
             :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
           />

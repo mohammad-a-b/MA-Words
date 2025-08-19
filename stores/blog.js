@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useToast } from "vue-toastification";
 import {
   getAllTags,
   getAllCategories,
@@ -20,6 +21,8 @@ const STORAGE_KEYS = {
 
 export const useBlogStore = defineStore("blog", () => {
   const config = useRuntimeConfig();
+  const { $supabase } = useNuxtApp();
+  const { user } = useAuth();
 
   const searchQuery = ref("");
   const sortOption = ref("newest");
@@ -33,13 +36,26 @@ export const useBlogStore = defineStore("blog", () => {
   const isDarkMode = ref(null);
   const comments = ref({});
 
-  const initBookmarks = () => {
-    if (process.client) {
-      const savedBookmarks = localStorage.getItem(STORAGE_KEYS.bookmarks);
-      if (savedBookmarks) {
-        bookmarkedPosts.value = JSON.parse(savedBookmarks);
+  const fetchServerBookmarks = async () => {
+    try {
+      if (!user.value) {
+        bookmarkedPosts.value = [];
+        return;
       }
+      const { data, error } = await $supabase
+        .from("bookmarks")
+        .select("post_id")
+        .eq("user_id", user.value.id);
+      if (error) throw error;
+      bookmarkedPosts.value = (data || []).map((row) => row.post_id);
+    } catch (err) {
+      console.error("Failed to fetch server bookmarks:", err);
+      bookmarkedPosts.value = [];
     }
+  };
+
+  const initBookmarks = async () => {
+    await fetchServerBookmarks();
   };
 
   const initComments = () => {
@@ -108,22 +124,45 @@ export const useBlogStore = defineStore("blog", () => {
     return id ? bookmarkedPosts.value.includes(id) : false;
   };
 
-  const toggleBookmark = (postOrSlug) => {
+  const toggleBookmark = async (postOrSlug) => {
     const id = getPostIdentifier(postOrSlug);
     if (!id) return;
 
-    const index = bookmarkedPosts.value.indexOf(id);
-    if (index > -1) {
-      bookmarkedPosts.value.splice(index, 1);
-    } else {
-      bookmarkedPosts.value.push(id);
+    if (!user.value) {
+      const toast = useToast();
+      toast.info("برای ذخیره بوکمارک ابتدا وارد حساب شوید");
+      return;
     }
 
-    if (process.client) {
-      localStorage.setItem(
-        STORAGE_KEYS.bookmarks,
-        JSON.stringify(bookmarkedPosts.value)
-      );
+    const wasBookmarked = bookmarkedPosts.value.includes(id);
+
+    if (wasBookmarked) {
+      bookmarkedPosts.value = bookmarkedPosts.value.filter((x) => x !== id);
+    } else {
+      bookmarkedPosts.value = [...bookmarkedPosts.value, id];
+    }
+
+    try {
+      if (wasBookmarked) {
+        const { error } = await $supabase
+          .from("bookmarks")
+          .delete()
+          .eq("user_id", user.value.id)
+          .eq("post_id", id);
+        if (error) throw error;
+      } else {
+        const { error } = await $supabase
+          .from("bookmarks")
+          .upsert({ user_id: user.value.id, post_id: id });
+        if (error) throw error;
+      }
+    } catch (err) {
+      console.error("Failed to sync bookmark:", err);
+      if (wasBookmarked) {
+        bookmarkedPosts.value = [...bookmarkedPosts.value, id];
+      } else {
+        bookmarkedPosts.value = bookmarkedPosts.value.filter((x) => x !== id);
+      }
     }
   };
 
@@ -172,6 +211,14 @@ export const useBlogStore = defineStore("blog", () => {
   const setAllPosts = (posts) => {
     allPosts.value = posts;
   };
+
+  watch(
+    () => user.value,
+    async (newUser, oldUser) => {
+      if (newUser) await fetchServerBookmarks();
+      else bookmarkedPosts.value = [];
+    }
+  );
 
   const toggleShowAllTags = () => {
     showAllTags.value = !showAllTags.value;

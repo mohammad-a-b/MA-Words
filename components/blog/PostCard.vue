@@ -60,13 +60,13 @@ const handleToggleBookmark = (event) => {
           <span
             class="px-1 sm:px-1.5 py-0.5 rounded-full text-[9px] xs:text-[10px] sm:text-xs text-white/90 bg-[#00000090] backdrop-blur-sm flex items-center gap-0.5 sm:gap-1"
           >
-            <IconsCalendar class="w-2 h-2 sm:w-2.5 sm:h-2.5" />
+            <LucideCalendar class="w-2 h-2 sm:w-2.5 sm:h-2.5" />
             {{ formatDate(post.date) }}
           </span>
           <span
             class="px-1 sm:px-1.5 py-0.5 rounded-full text-[9px] xs:text-[10px] sm:text-xs text-white/90 bg-[#00000090] backdrop-blur-sm flex items-center gap-0.5 sm:gap-1"
           >
-            <IconsClock class="w-2 h-2 sm:w-2.5 sm:h-2.5" />
+            <LucideClock3 class="w-2 h-2 sm:w-2.5 sm:h-2.5" />
             {{ calculateReadingTime(post) }} دقیقه
           </span>
         </div>
@@ -97,7 +97,7 @@ const handleToggleBookmark = (event) => {
             : 'text-gray-500 bg-black/5 hover:bg-black/10 border-black/10 hover:border-black/20',
         ]"
       >
-        <IconsBookmark class="w-3.5 h-3.5 sm:w-4 sm:h-4" :filled="isBookmarked" />
+        <LucideBookmark class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
       </button>
     </div>
 
@@ -137,7 +137,7 @@ const handleToggleBookmark = (event) => {
         "
       >
         <div class="z-10 flex items-center gap-2">
-          <IconsArrow
+          <LucideArrowRight
             class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
           />
           <span class="text-xs sm:text-sm">مطالعه بیشتر</span>
@@ -173,7 +173,7 @@ const handleToggleBookmark = (event) => {
           :class="isDark ? 'text-gray-400' : 'text-gray-500'"
         >
           <span class="flex items-center gap-1">
-            <IconsCalendar class="w-3 h-3 sm:w-4 sm:h-4" />
+            <LucideCalendar class="w-3 h-3 sm:w-4 sm:h-4" />
             {{ formatDate(post.date) }}
           </span>
           <span class="flex items-center gap-1">
@@ -217,7 +217,7 @@ const handleToggleBookmark = (event) => {
               : 'text-gray-500 bg-black/5 hover:bg-black/10 border-black/10 hover:border-black/20',
           ]"
         >
-          <IconsBookmark class="w-4 h-4" :filled="isBookmarked" />
+          <LucideBookmark class="w-4 h-4" />
         </button>
       </div>
 
@@ -257,7 +257,7 @@ const handleToggleBookmark = (event) => {
           "
         >
           <div class="z-10 flex items-center gap-2">
-            <IconsArrow
+            <LucideArrowRight
               class="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1"
             />
             <span class="text-[10px] xs:text-xs sm:text-sm">مطالعه بیشتر</span>

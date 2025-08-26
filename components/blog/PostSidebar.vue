@@ -1,15 +1,7 @@
 <script setup>
 import { useBlogStore } from "~/stores/blog";
-import { useDark } from "@vueuse/core";
 
 const blogStore = useBlogStore();
-const isDark = useDark({
-  selector: "html",
-  attribute: "class",
-  valueDark: "dark",
-  valueLight: "light",
-  storageKey: "vueuse-dark",
-});
 
 const props = defineProps({
   currentPost: {
@@ -49,24 +41,13 @@ watch(allPosts, () => {
 
 <template>
   <aside class="w-full lg:w-80 sticky top-24">
-    <div
-      class="p-5 rounded-2xl transition-all duration-300 shadow-sm"
-      :class="
-        isDark
-          ? 'bg-[#0f0f1d]/80 backdrop-blur-lg border border-[#ffffff10]'
-          : 'bg-white/80 backdrop-blur-lg border border-gray-100'
-      "
-    >
+    <div class="p-5 rounded-2xl transition-all duration-300 shadow-sm backdrop-blur-lg border bg-white/80 border-gray-100 dark:bg-[#0f0f1d]/80 dark:border-[#ffffff10]">
       <button
         @click="togglePosts"
-        class="w-full text-base font-bold mb-5 flex items-center justify-between hover:opacity-80 transition-opacity"
-        :class="isDark ? 'text-gray-100' : 'text-gray-800'"
+        class="w-full text-base font-bold mb-5 flex items-center justify-between hover:opacity-80 transition-opacity text-gray-800 dark:text-gray-100"
       >
         <div class="flex items-center gap-3">
-          <LucideGitPullRequestArrow
-            class="w-5 h-5"
-            :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
-          />
+          <LucideGitPullRequestArrow class="w-5 h-5 text-[#7091F5] dark:text-[#578FCA]" />
           پست‌های اخیر
         </div>
         <svg
@@ -91,22 +72,15 @@ watch(allPosts, () => {
             v-for="post in allPosts"
             :key="post.path"
             :to="post.path"
-            class="block p-4 rounded-xl transition-all duration-300 border hover:-translate-y-0.5"
-            :class="
-              isDark
-                ? 'bg-[#1a1a2e]/50 hover:bg-[#1f1f3d]/50 border-[#ffffff08]'
-                : 'bg-gray-50/50 hover:bg-white/50 border-gray-100'
-            "
+            class="block p-4 rounded-xl transition-all duration-300 border hover:-translate-y-0.5 bg-gray-50/50 hover:bg-white/50 border-gray-100 dark:bg-[#1a1a2e]/50 dark:hover:bg-[#1f1f3d]/50 dark:border-[#ffffff08]"
           >
             <h4
-              class="text-sm font-medium line-clamp-1 mb-3"
-              :class="isDark ? 'text-gray-200' : 'text-gray-800'"
+              class="text-sm font-medium line-clamp-1 mb-3 text-gray-800 dark:text-gray-200"
             >
               {{ post.title }}
             </h4>
             <div
-              class="flex items-center gap-2 text-[11px]"
-              :class="isDark ? 'text-gray-400' : 'text-gray-500'"
+              class="flex items-center gap-2 text-[11px] text-gray-500 dark:text-gray-400"
             >
               <LucideCalendar class="w-3.5 h-3.5" />
               <span>{{ formatDate(post.date) }}</span>

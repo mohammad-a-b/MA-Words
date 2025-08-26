@@ -39,17 +39,9 @@ useHead({
   title: () => `وبلاگ من | ${postTitle.value}`,
 });
 
-const isDark = useDark({
-  selector: "html",
-  attribute: "class",
-  valueDark: "dark",
-  valueLight: "light",
-  storageKey: "vueuse-dark",
-});
 
 onMounted(() => {
   blogStore.initBookmarks();
-  blogStore.initDarkMode(isDark.value);
 });
 
 const isBookmarked = computed(() => {
@@ -122,98 +114,48 @@ onMounted(() => {
     <div class="relative min-h-screen">
       <div class="container mx-auto px-0 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
         <div v-if="pending" class="flex justify-center items-center py-20">
-          <div
-            class="spinner w-8 h-8 border-4 border-t-4 rounded-full animate-spin"
-            :class="
-              isDark
-                ? 'border-gray-700 border-t-[#578FCA]'
-                : 'border-gray-200 border-t-[#7091F5]'
-            "
-          ></div>
+          <div class="spinner w-8 h-8 border-4 border-t-4 rounded-full animate-spin border-gray-200 border-t-[#7091F5] dark:border-gray-700 dark:border-t-[#578FCA]"></div>
         </div>
 
         <div v-else>
           <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
             <article
               v-if="post"
-              class="flex-1 w-full lg:w-auto mx-auto rounded-2xl sm:rounded-3xl p-2.5 sm:p-6 md:p-8 transition-all duration-300"
-              :class="isDark ? 'bg-[#0f0f1d] shadow-2xl' : 'bg-white shadow-lg'"
+              class="flex-1 w-full lg:w-auto mx-auto rounded-2xl sm:rounded-3xl p-2.5 sm:p-6 md:p-8 transition-all duration-300 bg-white shadow-lg dark:bg-[#0f0f1d] dark:shadow-2xl"
             >
               <header class="mb-6 sm:mb-8">
+                <div v-if="post.meta?.image" class="mb-5 sm:mb-7">
+                  <figure class="relative rounded-2xl overflow-hidden shadow-lg">
+                    <img
+                      :src="post.meta.image"
+                      :alt="post.title"
+                      class="w-full h-56 sm:h-72 md:h-80 object-cover"
+                    />
+                    <figcaption class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 text-xs sm:text-sm text-white/90 bg-gradient-to-t from-black/60 to-transparent">
+                      {{ post.title }}
+                    </figcaption>
+                  </figure>
+                </div>
                 <div class="flex items-center justify-between mb-4">
                   <NuxtLink to="/blog" class="flex items-center gap-2 group">
-                    <LucideArrowLeft
-                      class="w-4 sm:w-5 h-4 sm:h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1"
-                      :class="isDark ? 'text-gray-400' : 'text-gray-600'"
-                    />
-                    <span
-                      class="text-sm sm:text-base"
-                      :class="isDark ? 'text-gray-400' : 'text-gray-600'"
-                      >بازگشت</span
-                    >
+                    <LucideArrowLeft class="w-4 sm:w-5 h-4 sm:h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1 text-gray-600 dark:text-gray-400" />
+                    <span class="text-sm sm:text-base text-gray-600 dark:text-gray-400">بازگشت</span>
                   </NuxtLink>
 
                   <div class="flex items-center gap-3">
-                    <button
-                      @click="toggleBookmark"
-                      class="p-2 rounded-full transition-colors duration-300"
-                      :class="
-                        isDark ? 'hover:bg-[#ffffff10]' : 'hover:bg-gray-100'
-                      "
-                    >
-                      <LucideBookmark
-                        class="w-5 h-5"
-                        :class="
-                          isBookmarked
-                            ? 'text-yellow-400'
-                            : isDark
-                            ? 'text-gray-400'
-                            : 'text-gray-600'
-                        "
-                      />
+                    <button @click="toggleBookmark" class="p-2 rounded-full transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-[#ffffff10]">
+                      <LucideBookmark class="w-5 h-5" :class="isBookmarked ? 'text-yellow-400' : 'text-gray-600 dark:text-gray-400'" />
                     </button>
 
                     <div class="relative">
-                      <button
-                        @click="sharePost"
-                        class="p-2 rounded-full transition-colors duration-300"
-                        :class="
-                          isDark ? 'hover:bg-[#ffffff10]' : 'hover:bg-gray-100'
-                        "
-                      >
-                        <LucideShare2
-                          class="w-5 h-5"
-                          :class="isDark ? 'text-gray-400' : 'text-gray-600'"
-                        />
+                      <button @click="sharePost" class="p-2 rounded-full transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-[#ffffff10]">
+                        <LucideShare2 class="w-5 h-5 text-gray-600 dark:text-gray-400" />
                       </button>
 
-                      <div
-                        v-if="showShareMenu"
-                        class="absolute left-0 top-full mt-2 p-2 rounded-lg shadow-lg"
-                        :class="
-                          isDark
-                            ? 'bg-[#0f0f1d] border border-[#ffffff20]'
-                            : 'bg-white border border-gray-200'
-                        "
-                      >
-                        <button
-                          @click="copyLink"
-                          class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-300"
-                          :class="
-                            isDark
-                              ? 'hover:bg-[#ffffff10]'
-                              : 'hover:bg-gray-100'
-                          "
-                        >
-                          <LucideCopy
-                            class="w-4 h-4"
-                            :class="isDark ? 'text-gray-400' : 'text-gray-600'"
-                          />
-                          <span
-                            class="text-sm"
-                            :class="isDark ? 'text-gray-300' : 'text-gray-700'"
-                            >کپی لینک</span
-                          >
+                      <div v-if="showShareMenu" class="absolute left-0 top-full mt-2 p-2 rounded-lg shadow-lg bg-white border border-gray-200 dark:bg-[#0f0f1d] dark:border-[#ffffff20]">
+                        <button @click="copyLink" class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-[#ffffff10]">
+                          <LucideCopy class="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                          <span class="text-sm text-gray-700 dark:text-gray-300">کپی لینک</span>
                         </button>
                       </div>
                     </div>
@@ -226,10 +168,7 @@ onMounted(() => {
                   {{ post.title }}
                 </h1>
 
-                <div
-                  class="flex flex-wrap items-center gap-3 sm:gap-4 text-sm"
-                  :class="isDark ? 'text-gray-400' : 'text-gray-600'"
-                >
+                <div class="flex flex-wrap items-center gap-3 sm:gap-4 text-sm text-gray-600 dark:text-gray-400">
                   <div class="flex items-center gap-2">
                     <LucideCalendar class="w-4 h-4" />
                     <span>{{ formatDate(post.date) }}</span>
@@ -247,77 +186,39 @@ onMounted(() => {
                 </div>
 
                 <div v-if="post.tags?.length" class="flex flex-wrap gap-2 mt-4">
-                  <span
-                    v-for="tag in post.tags"
-                    :key="tag"
-                    class="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm flex items-center gap-1 border"
-                    :class="
-                      isDark
-                        ? 'bg-[#ffffff05] text-gray-300 border-white/10'
-                        : 'bg-gray-50 text-gray-600 border-gray-200'
-                    "
-                  >
+                  <span v-for="tag in post.tags" :key="tag" class="px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm flex items-center gap-1 border bg-gray-50 text-gray-600 border-gray-200 dark:bg-[#ffffff05] dark:text-gray-300 dark:border-white/10">
                     <LucideTag class="w-3 h-3" />
                     {{ tag }}
                   </span>
                 </div>
               </header>
 
-              <div
-                class="content-renderer prose prose-sm sm:prose-base lg:prose-lg max-w-none mb-6 sm:mb-8"
-                :class="isDark ? 'prose-invert text-gray-300' : 'text-gray-700'"
-              >
+              <div class="content-renderer prose prose-sm sm:prose-base lg:prose-lg max-w-none mb-6 sm:mb-8 text-gray-700 dark:prose-invert dark:text-gray-300">
                 <ContentRenderer :value="post" />
               </div>
 
-              <div
-                class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t mb-6 sm:mb-8"
-                :class="isDark ? 'border-[#ffffff20]' : 'border-gray-200'"
-              >
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t mb-6 sm:mb-8 border-gray-200 dark:border-[#ffffff20]">
                 <div class="flex items-center gap-2">
                   <div>
-                    <h3
-                      class="font-semibold text-sm sm:text-base"
-                      :class="isDark ? 'text-gray-300' : 'text-gray-700'"
-                    >
+                    <h3 class="font-semibold text-sm sm:text-base text-gray-700 dark:text-gray-300">
                       {{ post?.meta?.author }}
                     </h3>
-                    <p
-                      class="text-xs"
-                      :class="isDark ? 'text-gray-400' : 'text-gray-500'"
-                    >
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
                       نویسنده
                     </p>
                   </div>
                 </div>
 
                <div class="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-3">
-                  <button
-                    @click="toggleBookmark"
-                    class="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border transition-all duration-300 text-sm sm:text-base"
-                    :class="[
-                      isBookmarked
-                        ? 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30'
-                        : isDark
-                        ? 'text-gray-400 bg-white/5 hover:bg-white/10 border-white/10'
-                        : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10',
-                    ]"
-                  >
+                  <button @click="toggleBookmark" class="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border transition-all duration-300 text-sm sm:text-base"
+                    :class="isBookmarked ? 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30' : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10 dark:text-gray-400 dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10'">
                     <LucideBookmark
                       class="w-4 sm:w-5 h-4 sm:h-5"
                     />
                     <span>{{ isBookmarked ? "ذخیره شد" : "ذخیره" }}</span>
                   </button>
 
-                  <button
-                    @click="sharePost"
-                    class="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border transition-all duration-300 text-sm sm:text-base"
-                    :class="
-                      isDark
-                        ? 'text-gray-400 bg-white/5 hover:bg-white/10 border-white/10'
-                        : 'text-gray-600 bg-black/5 hover:bg-black/10 border-black/10'
-                    "
-                  >
+                  <button @click="sharePost" class="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border transition-all duration-300 text-sm sm:text-base text-gray-600 bg-black/5 hover:bg-black/10 border-black/10 dark:text-gray-400 dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10">
                     <LucideShare2 class="w-4 sm:w-5 h-4 sm:h-5" />
                     <span>اشتراک‌گذاری</span>
                   </button>
@@ -325,16 +226,8 @@ onMounted(() => {
               </div>
 
               <div class="mt-6 sm:mt-8 flex justify-start">
-                <NuxtLink
-                  to="/blog"
-                  class="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full border transition-all duration-300 group text-sm sm:text-base"
-                  :class="
-                    isDark
-                      ? 'border-[#ffffff30] hover:border-[#7091F5] text-gray-300 hover:text-[#7091F5]'
-                      : 'border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA]'
-                  "
-                >
-                  <LucideArrowLeft
+                <NuxtLink to="/blog" class="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full border transition-all duration-300 group text-sm sm:text-base border-[#00000020] hover:border-[#578FCA] text-gray-700 hover:text-[#578FCA] dark:border-[#ffffff30] dark:hover:border-[#7091F5] dark:text-gray-300 dark:hover:text-[#7091F5]">
+                  <LucideArrowRight 
                     class="w-4 sm:w-5 h-4 sm:h-5 transform rotate-180 transition-transform duration-300 group-hover:-translate-x-1"
                   />
                   <span class="font-medium">بازگشت به وبلاگ</span>
@@ -346,11 +239,7 @@ onMounted(() => {
               <PostSidebar :current-post="post" />
             </aside>
 
-            <p
-              v-if="!post"
-              class="text-center text-xl sm:text-2xl md:text-3xl font-bold py-20"
-              :class="isDark ? 'text-[#7091F5]' : 'text-[#578FCA]'"
-            >
+            <p v-if="!post" class="text-center text-xl sm:text-2xl md:text-3xl font-bold py-20 text-[#578FCA] dark:text-[#7091F5]">
               ۴۰۴ | مقاله مورد نظر یافت نشد
             </p>
           </div>

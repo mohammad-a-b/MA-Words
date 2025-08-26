@@ -1,7 +1,7 @@
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { useToast } from "vue-toastification";
-import { useDark } from "@vueuse/core";
+import { useAuth } from "~/composables/useAuth";
 
 const props = defineProps({
   postId: {
@@ -12,13 +12,6 @@ const props = defineProps({
 
 const { $supabase } = useNuxtApp();
 const toast = useToast();
-const isDark = useDark({
-  selector: "html",
-  attribute: "class",
-  valueDark: "dark",
-  valueLight: "light",
-  storageKey: "vueuse-dark",
-});
 
 const state = reactive({
   name: "",
@@ -31,7 +24,7 @@ const isSubmitting = ref(false);
 const comments = ref([]);
 const loading = ref(false);
 const likedComments = ref([]);
-const user = ref(null);
+const { user } = useAuth();
 
 const fetchComments = async () => {
   loading.value = true;
@@ -51,11 +44,10 @@ const fetchComments = async () => {
   }
 };
 
-const fetchUser = async () => {
-  const { data } = await $supabase.auth.getUser();
-  user.value = data.user;
+
+watch(() => user.value?.id, () => {
   likedComments.value = getLikedCommentsFromStorage();
-};
+});
 
 const getLikedCommentsFromStorage = () => {
   if (process.client) {
@@ -76,16 +68,7 @@ const saveLikedCommentsToStorage = (likedComments) => {
   }
 };
 
-const setupAuthListener = () => {
-  $supabase.auth.onAuthStateChange((event, session) => {
-    if (event === "SIGNED_OUT") {
-      likedComments.value = [];
-    } else if (event === "SIGNED_IN") {
-      user.value = session?.user || null;
-      likedComments.value = getLikedCommentsFromStorage();
-    }
-  });
-};
+
 
 const submitComment = async () => {
   if (!user.value) {
@@ -196,24 +179,15 @@ const formatCommentDate = (dateString) => {
 };
 
 onMounted(() => {
-  fetchUser();
   fetchComments();
-  setupAuthListener();
+  likedComments.value = getLikedCommentsFromStorage();
 });
 </script>
 
 <template>
   <div class="comments-section space-y-4 sm:space-y-6">
-    <div
-      class="p-3 sm:p-4 rounded-2xl border transition-all duration-300"
-      :class="
-        isDark ? 'bg-[#1a1a2e] border-[#ffffff15]' : 'bg-white border-gray-200'
-      "
-    >
-      <h3
-        class="text-lg sm:text-xl font-bold mb-4 sm:mb-6"
-        :class="isDark ? 'text-gray-200' : 'text-gray-800'"
-      >
+    <div class="p-3 sm:p-4 rounded-2xl border transition-all duration-300 bg-white border-gray-200 dark:bg-[#1a1a2e] dark:border-[#ffffff15]">
+      <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-gray-800 dark:text-gray-200">
         ارسال نظر
       </h3>
       <form @submit.prevent="submitComment" class="space-y-3 sm:space-y-4">
@@ -224,12 +198,7 @@ onMounted(() => {
               type="text"
               placeholder="نام *"
               :disabled="isSubmitting"
-              class="w-full px-3 sm:px-4 py-2 rounded-lg border text-sm"
-              :class="
-                isDark
-                  ? 'bg-[#0f0f1d] text-gray-300 border-[#ffffff15]'
-                  : 'bg-gray-50 text-gray-700 border-gray-200'
-              "
+              class="w-full px-3 sm:px-4 py-2 rounded-lg border text-sm bg-gray-50 text-gray-700 border-gray-200 dark:bg-[#0f0f1d] dark:text-gray-300 dark:border-[#ffffff15]"
             />
           </div>
 
@@ -239,12 +208,7 @@ onMounted(() => {
               type="email"
               placeholder="ایمیل *"
               :disabled="isSubmitting"
-              class="w-full px-3 sm:px-4 py-2 rounded-lg border text-sm"
-              :class="
-                isDark
-                  ? 'bg-[#0f0f1d] text-gray-300 border-[#ffffff15]'
-                  : 'bg-gray-50 text-gray-700 border-gray-200'
-              "
+              class="w-full px-3 sm:px-4 py-2 rounded-lg border text-sm bg-gray-50 text-gray-700 border-gray-200 dark:bg-[#0f0f1d] dark:text-gray-300 dark:border-[#ffffff15]"
             />
           </div>
         </div>
@@ -255,22 +219,14 @@ onMounted(() => {
             rows="4"
             placeholder="نظر خود را بنویسید... *"
             :disabled="isSubmitting"
-            class="w-full px-3 sm:px-4 py-2 rounded-lg border text-sm"
-            :class="
-              isDark
-                ? 'bg-[#0f0f1d] text-gray-300 border-[#ffffff15]'
-                : 'bg-gray-50 text-gray-700 border-gray-200'
-            "
+            class="w-full px-3 sm:px-4 py-2 rounded-lg border text-sm bg-gray-50 text-gray-700 border-gray-200 dark:bg-[#0f0f1d] dark:text-gray-300 dark:border-[#ffffff15]"
           ></textarea>
         </div>
         <div class="flex justify-end">
           <button
             type="submit"
             :disabled="isSubmitting"
-            class="px-4 sm:px-6 py-2 rounded-lg font-medium text-sm"
-            :class="
-              isDark ? 'bg-[#578FCA] text-white' : 'bg-[#7091F5] text-white'
-            "
+            class="px-4 sm:px-6 py-2 rounded-lg font-medium text-sm bg-[#7091F5] text-white dark:bg-[#578FCA]"
           >
             <span v-if="isSubmitting">در حال ارسال...</span>
             <span v-else>ارسال نظر</span>
@@ -279,16 +235,8 @@ onMounted(() => {
       </form>
     </div>
 
-    <div
-      class="p-2 sm:p-3 rounded-2xl border transition-all duration-300"
-      :class="
-        isDark ? 'bg-[#1a1a2e] border-[#ffffff15]' : 'bg-white border-gray-200'
-      "
-    >
-      <h3
-        class="text-lg sm:text-xl font-bold mb-2"
-        :class="isDark ? 'text-gray-200' : 'text-gray-800'"
-      >
+    <div class="p-2 sm:p-3 rounded-2xl border transition-all duration-300 bg-white border-gray-200 dark:bg-[#1a1a2e] dark:border-[#ffffff15]">
+      <h3 class="text-lg sm:text-xl font-bold mb-2 text-gray-800 dark:text-gray-200">
         نظرات <span class="text-sm font-normal">({{ comments.length }})</span>
       </h3>
 
@@ -299,10 +247,7 @@ onMounted(() => {
         در حال بارگذاری نظرات...
       </div>
       <div v-else-if="comments.length === 0" class="text-center">
-        <p
-          class="text-base sm:text-lg pb-4 sm:pb-5"
-          :class="isDark ? 'text-gray-400' : 'text-gray-500'"
-        >
+        <p class="text-base sm:text-lg pb-4 sm:pb-5 text-gray-500 dark:text-gray-400">
           نظری نداریم!!😀 اولین نفر باشید!
         </p>
       </div>
@@ -311,42 +256,24 @@ onMounted(() => {
         <div
           v-for="comment in comments"
           :key="comment.id"
-          class="p-3 sm:p-5 rounded-xl border transition-all duration-300 hover:border-opacity-50"
-          :class="
-            isDark
-              ? 'bg-[#0f0f1d] border-[#ffffff10] hover:bg-[#0f0f1d]/80'
-              : 'bg-gray-50 border-gray-100 hover:bg-gray-50/80'
-          "
+          class="p-3 sm:p-5 rounded-xl border transition-all duration-300 hover:border-opacity-50 bg-gray-50 border-gray-100 hover:bg-gray-50/80 dark:bg-[#0f0f1d] dark:border-[#ffffff10] dark:hover:bg-[#0f0f1d]/80"
         >
           <div class="flex items-start justify-between mb-3 sm:mb-4">
             <div class="flex items-center gap-2 sm:gap-3">
-              <div
-                class="w-8 h-8 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-sm sm:text-lg font-bold shadow-inner"
-                :class="
-                  isDark
-                    ? 'bg-[#578FCA]/20 text-[#578FCA]'
-                    : 'bg-[#7091F5]/20 text-[#7091F5]'
-                "
-              >
+              <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-sm sm:text-lg font-bold shadow-inner bg-[#7091F5]/20 text-[#7091F5] dark:bg-[#578FCA]/20 dark:text-[#578FCA]">
                 {{ comment.author ? comment.author[0].toUpperCase() : "?" }}
               </div>
               <div>
                 <h4 class="font-semibold text-sm sm:text-base">
                   {{ comment.author }}
                 </h4>
-                <p
-                  class="text-xs sm:text-sm mt-0.5"
-                  :class="isDark ? 'text-gray-400' : 'text-gray-500'"
-                >
+                <p class="text-xs sm:text-sm mt-0.5 text-gray-500 dark:text-gray-400">
                   {{ formatCommentDate(comment.created_at) }}
                 </p>
               </div>
             </div>
           </div>
-          <p
-            class="text-justify leading-6 text-sm sm:text-base"
-            :class="isDark ? 'text-gray-300' : 'text-gray-600'"
-          >
+          <p class="text-justify leading-6 text-sm sm:text-base text-gray-600 dark:text-gray-300">
             {{ comment.content }}
           </p>
           <div class="flex items-center gap-2 mt-3 sm:mt-4">

@@ -3,17 +3,7 @@ import { useBlogStore } from '~/stores/blog';
 
 const blogStore = useBlogStore();
 
-const isDark = useDark({
-  selector: "html",
-  attribute: "class",
-  valueDark: "dark",
-  valueLight: "light",
-  storageKey: "vueuse-dark",
-});
 
-onMounted(() => {
-  blogStore.initDarkMode(isDark.value);
-});
 
 const handleCategoryClick = (category) => {
   blogStore.toggleCategory(category);
@@ -44,16 +34,10 @@ const handleShowAllTagsClick = () => {
               v-model="blogStore.searchQuery"
               type="text"
               placeholder="جستجو در مطالب..."
-              class="w-full px-3 sm:px-4 py-2 sm:py-2.5 border rounded-full focus:outline-none transition-all duration-300 pr-10 text-sm sm:text-base blog-input"
-              :class="
-                isDark
-                  ? 'bg-[#0f0f1d] text-white border-[#ffffff20] focus:border-[#578FCA]'
-                  : 'bg-white text-gray-800 border-[#00000020] focus:border-[#7091F5]'
-              "
+              class="w-full px-3 sm:px-4 py-2 sm:py-2.5 border rounded-full focus:outline-none transition-all duration-300 pr-10 text-sm sm:text-base blog-input bg-white text-gray-800 border-[#00000020] focus:border-[#7091F5] dark:bg-[#0f0f1d] dark:text-white dark:border-[#ffffff20] dark:focus:border-[#578FCA]"
             />
             <LucideSearch
-              class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5"
-              :class="isDark ? 'text-gray-400' : 'text-gray-500'"
+              class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400"
             />
           </div>
         </div>
@@ -62,12 +46,7 @@ const handleShowAllTagsClick = () => {
           <div class="relative w-full sm:w-auto">
             <select
               v-model="blogStore.sortOption"
-              class="appearance-none w-full sm:w-auto px-3 py-2 border rounded-full focus:outline-none transition-all duration-300 pr-8 text-sm cursor-pointer blog-select"
-              :class="
-                isDark
-                  ? 'bg-[#0f0f1d] text-white border-[#ffffff20] focus:border-[#578FCA]'
-                  : 'bg-white text-gray-800 border-[#00000020] focus:border-[#7091F5]'
-              "
+              class="appearance-none w-full sm:w-auto px-3 py-2 border rounded-full focus:outline-none transition-all duration-300 pr-8 text-sm cursor-pointer blog-select bg-white text-gray-800 border-[#00000020] focus:border-[#7091F5] dark:bg-[#0f0f1d] dark:text-white dark:border-[#ffffff20] dark:focus:border-[#578FCA]"
             >
               <option value="newest">جدیدترین</option>
               <option value="oldest">قدیمی‌ترین</option>
@@ -77,26 +56,22 @@ const handleShowAllTagsClick = () => {
             <div
               class="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
             >
-              <LucideChevronDown
-                class="w-4 h-4 transform rotate-90"
-                :class="isDark ? 'text-gray-400' : 'text-gray-500'"
-              />
+              <LucideChevronDown class="w-4 h-4 transform rotate-90 text-gray-500 dark:text-gray-400" />
             </div>
           </div>
 
-          <div class="flex border rounded-full overflow-hidden"
-            :class="isDark ? 'border-[#ffffff20]' : 'border-gray-200'">
+          <div class="flex border rounded-full overflow-hidden border-gray-200 dark:border-[#ffffff20]">
             <button 
               @click="handleViewTypeClick('grid')" 
               class="p-2 transition-colors duration-300"
-              :class="blogStore.viewType === 'grid' ? (isDark ? 'bg-[#7091F5]' : 'bg-[#578FCA]') : (isDark ? 'hover:bg-[#ffffff10]' : 'hover:bg-gray-100')">
-              <LucideGrid2x2 class="w-4 h-4" :class="blogStore.viewType === 'grid' ? 'text-white' : (isDark ? 'text-gray-400' : 'text-gray-600')" />
+              :class="blogStore.viewType === 'grid' ? 'bg-[#578FCA] dark:bg-[#7091F5]' : 'hover:bg-gray-100 dark:hover:bg-[#ffffff10]'">
+              <LucideGrid2x2 class="w-4 h-4" :class="blogStore.viewType === 'grid' ? 'text-white' : 'text-gray-600 dark:text-gray-400'" />
             </button>
             <button 
               @click="handleViewTypeClick('list')" 
               class="p-2 transition-colors duration-300"
-              :class="blogStore.viewType === 'list' ? (isDark ? 'bg-[#7091F5]' : 'bg-[#578FCA]') : (isDark ? 'hover:bg-[#ffffff10]' : 'hover:bg-gray-100')">
-              <LucideList class="w-4 h-4" :class="blogStore.viewType === 'list' ? 'text-white' : (isDark ? 'text-gray-400' : 'text-gray-600')" />
+              :class="blogStore.viewType === 'list' ? 'bg-[#578FCA] dark:bg-[#7091F5]' : 'hover:bg-gray-100 dark:hover:bg-[#ffffff10]'">
+              <LucideList class="w-4 h-4" :class="blogStore.viewType === 'list' ? 'text-white' : 'text-gray-600 dark:text-gray-400'" />
             </button>
           </div>
         </div>
@@ -104,13 +79,10 @@ const handleShowAllTagsClick = () => {
 
       <div class="flex flex-col gap-3 sm:gap-4">
         <div class="flex items-center gap-2">
-          <LucideGrid2x2
-            class="w-4 h-4 sm:w-5 sm:h-5"
-            :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
+          <LucideGrid2x2 class="w-4 h-4 sm:w-5 sm:h-5 text-[#7091F5] dark:text-[#578FCA]"
           />
           <h3
-            class="text-base sm:text-lg font-semibold"
-            :class="isDark ? 'text-gray-300' : 'text-gray-700'"
+            class="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-300"
           >
             دسته‌بندی‌ها
           </h3>
@@ -129,13 +101,10 @@ const handleShowAllTagsClick = () => {
 
       <div class="flex flex-col gap-3 sm:gap-4">
         <div class="flex items-center gap-2">
-          <LucideTag
-            class="w-4 h-4 sm:w-5 sm:h-5"
-            :class="isDark ? 'text-[#578FCA]' : 'text-[#7091F5]'"
+          <LucideTag class="w-4 h-4 sm:w-5 sm:h-5 text-[#7091F5] dark:text-[#578FCA]"
           />
           <h3
-            class="text-base sm:text-lg font-semibold"
-            :class="isDark ? 'text-gray-300' : 'text-gray-700'"
+            class="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-300"
           >
             برچسب‌ها
           </h3>

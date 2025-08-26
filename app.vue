@@ -1,6 +1,5 @@
 <script setup></script>
 <template>
- <ClientOnly>
     <NuxtLayout>
       <div class="container mx-auto px-2 sm:px-4">
         <div class="fixed top-4 right-4 z-[9999] flex items-center gap-3">
@@ -11,7 +10,6 @@
         <NuxtPage />
       </div>
     </NuxtLayout>
-  </ClientOnly>
 </template>
 
 <style>

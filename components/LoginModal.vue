@@ -8,13 +8,6 @@ const isSignup = ref(false);
 const isSubmitting = ref(false);
 const showPassword = ref(false);
 const modalRef = ref(null);
-const isDark = useDark({
-  selector: 'html',
-  attribute: 'class',
-  valueDark: 'dark',
-  valueLight: 'light',
-  storageKey: 'vueuse-dark',
-});
 const modelValue = defineModel({ default: false });
 const supabase = useNuxtApp().$supabase;
 const toast = useToast();
@@ -150,7 +143,7 @@ const handleSignup = async () => {
     if (!error) {
       if (data.user && !data.user.email_confirmed_at) {
         showMessage(
-          "ثبت‌نام موفق بود! لطفاً ایمیل‌تان را چک کنید و روی لینک تأیید کلیک کنید. اگر ایمیل را نمی‌بینید، پوشه spam را بررسی کنید.",
+          "ثبت‌نام موفق بود! لطفاً ایمیل‌تان را چک کنید و روی لینک تأیید کلیک کنید .",
           "success"
         );
         closeModal();
@@ -193,13 +186,11 @@ const handleSignup = async () => {
   >
     <div
       ref="modalRef"
-      class="relative w-full max-w-md rounded-2xl p-6 shadow-2xl transition-all border"
-      :class="isDark ? 'bg-[#0f0f1d] border-gray-700' : 'bg-white border-gray-200'"
+      class="relative w-full max-w-md rounded-2xl p-6 shadow-2xl transition-all border bg-white border-gray-200 dark:bg-[#0f0f1d] dark:border-gray-700"
     >
       <button
         @click="closeModal"
-        class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
-        :class="isDark ? 'bg-gray-800 text-gray-400 hover:text-white' : 'bg-gray-100 text-gray-500 hover:text-gray-700'"
+        class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-gray-100 text-gray-500 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-white"
         aria-label="بستن"
       >
         <LucideX class="w-5 h-5" />
@@ -209,10 +200,10 @@ const handleSignup = async () => {
         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
           <LucideUserRound class="w-8 h-8 text-white" />        
         </div>
-        <h2 class="text-2xl font-bold mb-2" :class="isDark ? 'text-gray-100' : 'text-gray-800'">
+        <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-100">
           {{ isSignup ? "ثبت‌نام در وبلاگ" : "ورود به حساب" }}
         </h2>
-        <p class="text-sm" :class="isDark ? 'text-gray-400' : 'text-gray-600'">
+        <p class="text-sm text-gray-600 dark:text-gray-400">
           {{
             isSignup
               ? "حساب کاربری جدید بسازید"
@@ -226,7 +217,7 @@ const handleSignup = async () => {
         class="space-y-6"
       >
         <div>
-          <label for="email" class="block text-sm font-medium mb-2" :class="isDark ? 'text-gray-300' : 'text-gray-700'">ایمیل</label>
+          <label for="email" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">ایمیل</label>
           <div class="relative">
             <div
               class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
@@ -248,13 +239,9 @@ const handleSignup = async () => {
               dir="ltr"
               class="w-full pr-10 pl-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-left [&::placeholder]:text-right"
               :class="[
-                isSubmitting
-                  ? (isDark ? 'bg-gray-800 cursor-not-allowed' : 'bg-gray-50 cursor-not-allowed')
-                  : (isDark ? 'bg-gray-800' : 'bg-white'),
-                v$.email.$error && v$.email.$dirty
-                  ? 'border-red-500 focus:border-red-500'
-                  : (isDark ? 'border-gray-600 focus:border-blue-500' : 'border-gray-200 focus:border-blue-500'),
-                isDark ? 'text-gray-100 placeholder-gray-400' : 'text-gray-900 placeholder-gray-500'
+                isSubmitting ? 'bg-gray-50 cursor-not-allowed dark:bg-gray-800' : 'bg-white dark:bg-gray-800',
+                v$.email.$error && v$.email.$dirty ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-blue-500 dark:border-gray-600',
+                'text-gray-900 placeholder-gray-500 dark:text-gray-100 dark:placeholder-gray-400'
               ]"
             />
           </div>
@@ -268,7 +255,7 @@ const handleSignup = async () => {
         </div>
 
         <div>
-          <label for="password" class="block text-sm font-medium mb-2" :class="isDark ? 'text-gray-300' : 'text-gray-700'">رمز عبور</label>
+          <label for="password" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">رمز عبور</label>
           <div class="relative">
             <div
               class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
@@ -287,13 +274,9 @@ const handleSignup = async () => {
               dir="ltr"
               class="w-full pr-10 pl-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-left [&::placeholder]:text-right"
               :class="[
-                isSubmitting
-                  ? (isDark ? 'bg-gray-800 cursor-not-allowed' : 'bg-gray-50 cursor-not-allowed')
-                  : (isDark ? 'bg-gray-800' : 'bg-white'),
-                v$.password.$error && v$.password.$dirty
-                  ? 'border-red-500 focus:border-red-500'
-                  : (isDark ? 'border-gray-600 focus:border-blue-500' : 'border-gray-200 focus:border-blue-500'),
-                isDark ? 'text-gray-100 placeholder-gray-400' : 'text-gray-900 placeholder-gray-500'
+                isSubmitting ? 'bg-gray-50 cursor-not-allowed dark:bg-gray-800' : 'bg-white dark:bg-gray-800',
+                v$.password.$error && v$.password.$dirty ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-blue-500 dark:border-gray-600',
+                'text-gray-900 placeholder-gray-500 dark:text-gray-100 dark:placeholder-gray-400'
               ]"
             />
             <button
@@ -315,13 +298,14 @@ const handleSignup = async () => {
         </div>
 
         <div v-if="isSignup">
-          <label for="confirmPassword" class="block text-sm font-medium mb-2" :class="isDark ? 'text-gray-300' : 'text-gray-700'">تکرار رمز عبور</label>
+          <label for="confirmPassword" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">تکرار رمز عبور</label>
           <div class="relative">
             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <LucideLock class="h-5 w-5 text-gray-400" />
             </div>
             <input
               v-model="state.confirmPassword"
+              @blur="v$.confirmPassword?.$touch()"
               :type="showPassword ? 'text' : 'password'"
               id="confirmPassword"
               name="confirmPassword"
@@ -331,22 +315,18 @@ const handleSignup = async () => {
               dir="ltr"
               class="w-full pr-10 pl-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-left [&::placeholder]:text-right"
               :class="[
-                isSubmitting
-                  ? (isDark ? 'bg-gray-800 cursor-not-allowed' : 'bg-gray-50 cursor-not-allowed')
-                  : (isDark ? 'bg-gray-800' : 'bg-white'),
-                state.confirmPassword && state.confirmPassword !== state.password
-                  ? 'border-red-500 focus:border-red-500'
-                  : (isDark ? 'border-gray-600 focus:border-blue-500' : 'border-gray-200 focus:border-blue-500'),
-                isDark ? 'text-gray-100 placeholder-gray-400' : 'text-gray-900 placeholder-gray-500'
+                isSubmitting ? 'bg-gray-50 cursor-not-allowed dark:bg-gray-800' : 'bg-white dark:bg-gray-800',
+                v$.confirmPassword?.$error && v$.confirmPassword?.$dirty ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-blue-500 dark:border-gray-600',
+                'text-gray-900 placeholder-gray-500 dark:text-gray-100 dark:placeholder-gray-400'
               ]"
             />
           </div>
           <p
-            v-if="state.confirmPassword && state.confirmPassword !== state.password"
+            v-if="v$.confirmPassword?.$error && v$.confirmPassword?.$dirty"
             class="mt-2 text-sm text-red-500 flex items-center"
           >
             <LucideAlertCircle class="w-4 h-4 mr-1" />
-            رمز عبور و تکرار آن مطابقت ندارند
+            {{ v$.confirmPassword.$errors[0].$message }}
           </p>
         </div>
 

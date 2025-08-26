@@ -16,13 +16,6 @@ const props = defineProps({
 
 const blogStore = useBlogStore();
 
-const isDark = useDark({
-  selector: "html",
-  attribute: "class",
-  valueDark: "dark",
-  valueLight: "light",
-  storageKey: "vueuse-dark",
-});
 
 const isBookmarked = computed(() => blogStore.isBookmarked(props.post));
 
@@ -37,12 +30,7 @@ const handleToggleBookmark = (event) => {
 <template>
   <article
     v-if="layout === 'grid'"
-    class="group rounded-xl sm:rounded-2xl p-2 sm:p-3 transition-all duration-300 relative flex flex-col border hover:shadow-lg blog-post-card"
-    :class="
-      isDark
-        ? 'bg-[#0f0f1d] border-[#ffffff10] hover:border-[#578FCA]/20'
-        : 'bg-white border-[#00000010] hover:border-[#7091F5]/20'
-    "
+    class="group rounded-xl sm:rounded-2xl p-2 sm:p-3 transition-all duration-300 relative flex flex-col border hover:shadow-lg blog-post-card bg-white border-[#00000010] hover:border-[#7091F5]/20 dark:bg-[#0f0f1d] dark:border-[#ffffff10] dark:hover:border-[#578FCA]/20"
   >
     <NuxtLink :to="post.path" class="relative block">
       <div
@@ -78,24 +66,13 @@ const handleToggleBookmark = (event) => {
         v-if="post.meta?.category"
         :text="post.meta.category"
         :show-icon="false"
-        class="category-tag px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm"
-        :class="
-          isDark
-            ? 'bg-gradient-to-r from-[#6366f1] to-[#4f46e5] text-white'
-            : 'bg-gradient-to-r from-[#818cf8] to-[#6366f1] text-white'
-        "
+        class="category-tag px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm bg-gradient-to-r from-[#818cf8] to-[#6366f1] text-white dark:from-[#6366f1] dark:to-[#4f46e5]"
       />
 
       <button
         @click="handleToggleBookmark"
         class="bookmark-btn p-1 sm:p-1.5 rounded-full transition-all duration-300 hover:scale-110 hover:rotate-6 z-10 shadow-sm border"
-        :class="[
-          isBookmarked
-            ? 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30'
-            : isDark
-            ? 'text-gray-400 bg-white/5 hover:bg-white/10 border-white/10 hover:border-white/20'
-            : 'text-gray-500 bg-black/5 hover:bg-black/10 border-black/10 hover:border-black/20',
-        ]"
+        :class="isBookmarked ? 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30' : 'text-gray-500 bg-black/5 hover:bg-black/10 border-black/10 hover:border-black/20 dark:text-gray-400 dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 dark:hover:border-white/20'"
       >
         <LucideBookmark class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
       </button>
@@ -107,10 +84,7 @@ const handleToggleBookmark = (event) => {
       {{ post.title }}
     </h2>
 
-    <p
-      class="mb-2 sm:mb-3 text-[10px] xs:text-xs sm:text-sm line-clamp-3 text-justify"
-      :class="isDark ? 'text-gray-300/90' : 'text-gray-600/90'"
-    >
+    <p class="mb-2 sm:mb-3 text-[10px] xs:text-xs sm:text-sm line-clamp-3 text-justify text-gray-600/90 dark:text-gray-300/90">
       {{ post.description || "..." }}
     </p>
 
@@ -129,12 +103,7 @@ const handleToggleBookmark = (event) => {
     <div class="mt-auto">
       <NuxtLink
         :to="post.path"
-        class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-all duration-300 hover:pr-6 group"
-        :class="
-          isDark
-            ? 'bg-[#ffffff08] border-[#ffffff15] hover:border-[#578FCA] hover:text-[#578FCA]'
-            : 'bg-[#f8f9fa] border-[#7091F520] hover:border-[#7091F5] hover:text-[#7091F5]'
-        "
+        class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-all duration-300 hover:pr-6 group bg-[#f8f9fa] border-[#7091F520] hover:border-[#7091F5] hover:text-[#7091F5] dark:bg-[#ffffff08] dark:border-[#ffffff15] dark:hover:border-[#578FCA] dark:hover:text-[#578FCA]"
       >
         <div class="z-10 flex items-center gap-2">
           <LucideArrowRight
@@ -148,10 +117,7 @@ const handleToggleBookmark = (event) => {
 
   <article
     v-else
-    class="group flex flex-col sm:flex-row gap-3 sm:gap-4 p-3 sm:p-4 border rounded-xl transition-all duration-300 relative blog-post-card"
-    :class="
-      isDark ? 'bg-[#0f0f1d] border-[#ffffff10]' : 'bg-white border-[#00000010]'
-    "
+    class="group flex flex-col sm:flex-row gap-3 sm:gap-4 p-3 sm:p-4 border rounded-xl transition-all duration-300 relative blog-post-card bg-white border-[#00000010] dark:bg-[#0f0f1d] dark:border-[#ffffff10]"
   >
     <NuxtLink :to="post.path" class="sm:w-48 md:w-64 shrink-0">
       <div
@@ -168,10 +134,7 @@ const handleToggleBookmark = (event) => {
 
     <div class="flex flex-col flex-grow">
       <div class="flex items-center justify-between mb-2">
-        <div
-          class="flex items-center gap-2 sm:gap-3 text-[10px] xs:text-xs sm:text-sm"
-          :class="isDark ? 'text-gray-400' : 'text-gray-500'"
-        >
+        <div class="flex items-center gap-2 sm:gap-3 text-[10px] xs:text-xs sm:text-sm text-gray-500 dark:text-gray-400">
           <span class="flex items-center gap-1">
             <LucideCalendar class="w-3 h-3 sm:w-4 sm:h-4" />
             {{ formatDate(post.date) }}
@@ -193,15 +156,7 @@ const handleToggleBookmark = (event) => {
             </svg>
             {{ calculateReadingTime(post) }} دقیقه
           </span>
-          <span
-            v-if="post.meta?.category"
-            class="category-tag px-2 py-0.5 rounded-full shadow-sm transition-all duration-300 hover:shadow-md"
-            :class="
-              isDark
-                ? 'bg-gradient-to-r from-[#6366f1] to-[#4f46e5] text-white'
-                : 'bg-gradient-to-r from-[#818cf8] to-[#6366f1] text-white'
-            "
-          >
+          <span v-if="post.meta?.category" class="category-tag px-2 py-0.5 rounded-full shadow-sm transition-all duration-300 hover:shadow-md bg-gradient-to-r from-[#818cf8] to-[#6366f1] text-white dark:from-[#6366f1] dark:to-[#4f46e5]">
             {{ post.meta.category }}
           </span>
         </div>
@@ -209,13 +164,7 @@ const handleToggleBookmark = (event) => {
         <button
           @click="handleToggleBookmark"
           class="bookmark-btn p-1.5 rounded-full transition-all duration-300 hover:scale-110 hover:rotate-6 z-10 shadow-sm border"
-          :class="[
-            isBookmarked
-              ? 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30'
-              : isDark
-              ? 'text-gray-400 bg-white/5 hover:bg-white/10 border-white/10 hover:border-white/20'
-              : 'text-gray-500 bg-black/5 hover:bg-black/10 border-black/10 hover:border-black/20',
-          ]"
+          :class="isBookmarked ? 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30' : 'text-gray-500 bg-black/5 hover:bg-black/10 border-black/10 hover:border-black/20 dark:text-gray-400 dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 dark:hover:border-white/20'"
         >
           <LucideBookmark class="w-4 h-4" />
         </button>
@@ -227,10 +176,7 @@ const handleToggleBookmark = (event) => {
         {{ post.title }}
       </h2>
 
-      <p
-        class="text-[10px] xs:text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2"
-        :class="isDark ? 'text-gray-300' : 'text-gray-600'"
-      >
+      <p class="text-[10px] xs:text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2 text-gray-600 dark:text-gray-300">
         {{ post.description }}
       </p>
 
@@ -247,15 +193,7 @@ const handleToggleBookmark = (event) => {
       </div>
 
       <div class="mt-auto">
-        <NuxtLink
-          :to="post.path"
-          class="inline-flex items-center gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full border transition-all duration-300 hover:pr-4 sm:hover:pr-6 group"
-          :class="
-            isDark
-              ? 'bg-[#ffffff08] border-[#ffffff15] hover:border-[#578FCA] hover:text-[#578FCA]'
-              : 'bg-[#f8f9fa] border-[#7091F520] hover:border-[#7091F5] hover:text-[#7091F5]'
-          "
-        >
+        <NuxtLink :to="post.path" class="inline-flex items-center gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full border transition-all duration-300 hover:pr-4 sm:hover:pr-6 group bg-[#f8f9fa] border-[#7091F520] hover:border-[#7091F5] hover:text-[#7091F5] dark:bg-[#ffffff08] dark:border-[#ffffff15] dark:hover:border-[#578FCA] dark:hover:text-[#578FCA]">
           <div class="z-10 flex items-center gap-2">
             <LucideArrowRight
               class="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1"

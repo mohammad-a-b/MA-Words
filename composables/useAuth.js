@@ -1,5 +1,9 @@
+let singletonUser
+let initialized = false
+
 export const useAuth = () => {
-  const user = ref(null)
+  if (!singletonUser) singletonUser = ref(null)
+  const user = singletonUser
   const { $supabase } = useNuxtApp()
 
   const fetchUser = async () => {
@@ -22,12 +26,13 @@ export const useAuth = () => {
     }
   }
 
-  onMounted(() => {
+  if (process.client && !initialized) {
+    initialized = true
     fetchUser()
     $supabase.auth.onAuthStateChange((_event, session) => {
       user.value = session?.user || null
     })
-  })
+  }
 
   return { user, logout }
 }

@@ -16,7 +16,6 @@ const SORT_METHODS = {
 
 const STORAGE_KEYS = {
   bookmarks: "bookmarkedPosts",
-  comments: "postComments",
 };
 
 export const useBlogStore = defineStore("blog", () => {
@@ -30,11 +29,15 @@ export const useBlogStore = defineStore("blog", () => {
   const selectedTag = ref(null);
   const selectedCategory = ref(null);
   const showAllTags = ref(false);
-  const maxVisibleTags = ref(5);
+  const maxVisibleTags = ref(4);
   const bookmarkedPosts = ref([]);
   const allPosts = ref([]);
-  const isDarkMode = ref(null);
-  const comments = ref({});
+  const bookmarksInitialized = ref(false);
+  const isFetchingBookmarks = ref(false);
+  const pendingToggleIds = ref(new Set());
+  const lastFetchedUserId = ref(null);
+  const lastFetchAtMs = ref(0);
+  
 
   const fetchServerBookmarks = async () => {
     try {
@@ -42,65 +45,35 @@ export const useBlogStore = defineStore("blog", () => {
         bookmarkedPosts.value = [];
         return;
       }
+      if (isFetchingBookmarks.value) return;
+      if (lastFetchedUserId.value === user.value.id && Date.now() - lastFetchAtMs.value < 1500) {
+        return;
+      }
+      isFetchingBookmarks.value = true;
       const { data, error } = await $supabase
         .from("bookmarks")
         .select("post_id")
         .eq("user_id", user.value.id);
       if (error) throw error;
       bookmarkedPosts.value = (data || []).map((row) => row.post_id);
+      lastFetchedUserId.value = user.value.id;
+      lastFetchAtMs.value = Date.now();
     } catch (err) {
       console.error("Failed to fetch server bookmarks:", err);
       bookmarkedPosts.value = [];
+    } finally {
+      isFetchingBookmarks.value = false;
     }
   };
 
   const initBookmarks = async () => {
+    if (bookmarksInitialized.value) return;
+    // mark early to block concurrent callers
+    bookmarksInitialized.value = true;
     await fetchServerBookmarks();
   };
 
-  const initComments = () => {
-    if (process.client) {
-      const savedComments = localStorage.getItem(STORAGE_KEYS.comments);
-      if (savedComments) {
-        comments.value = JSON.parse(savedComments);
-      }
-    }
-  };
-
-  const saveComments = () => {
-    if (process.client) {
-      localStorage.setItem(STORAGE_KEYS.comments, JSON.stringify(comments.value));
-    }
-  };
-
-  const addComment = (postId, comment) => {
-    if (!comments.value[postId]) {
-      comments.value[postId] = [];
-    }
-    comments.value[postId].push({
-      ...comment,
-      id: Date.now(),
-      date: new Date().toISOString(),
-    });
-    saveComments();
-  };
-
-  const deleteComment = (postId, commentId) => {
-    if (comments.value[postId]) {
-      comments.value[postId] = comments.value[postId].filter(
-        (c) => c.id !== commentId
-      );
-      saveComments();
-    }
-  };
-
-  const getPostComments = (postId) => {
-    return comments.value[postId] || [];
-  };
-
-  const initDarkMode = (isDark) => {
-    isDarkMode.value = isDark;
-  };
+  
 
   const getPostIdentifier = (postOrSlug) => {
     if (typeof postOrSlug === "string") return postOrSlug;
@@ -134,6 +107,9 @@ export const useBlogStore = defineStore("blog", () => {
       return;
     }
 
+    if (pendingToggleIds.value.has(id)) return;
+    pendingToggleIds.value.add(id);
+
     const wasBookmarked = bookmarkedPosts.value.includes(id);
 
     if (wasBookmarked) {
@@ -163,6 +139,8 @@ export const useBlogStore = defineStore("blog", () => {
       } else {
         bookmarkedPosts.value = bookmarkedPosts.value.filter((x) => x !== id);
       }
+    } finally {
+      pendingToggleIds.value.delete(id);
     }
   };
 
@@ -214,9 +192,18 @@ export const useBlogStore = defineStore("blog", () => {
 
   watch(
     () => user.value,
-    async (newUser, oldUser) => {
-      if (newUser) await fetchServerBookmarks();
-      else bookmarkedPosts.value = [];
+    async (newUser) => {
+      if (!newUser) {
+        bookmarksInitialized.value = false;
+        bookmarkedPosts.value = [];
+        lastFetchedUserId.value = null;
+        return;
+      }
+
+      if (newUser.id !== lastFetchedUserId.value) {
+        bookmarksInitialized.value = false;
+        await initBookmarks();
+      }
     }
   );
 
@@ -228,13 +215,7 @@ export const useBlogStore = defineStore("blog", () => {
     viewType.value = type;
   };
 
-  const setSearchQuery = (query) => {
-    searchQuery.value = query;
-  };
-
-  const setSortOption = (option) => {
-    sortOption.value = option;
-  };
+  
 
   const toggleTag = (tag) => {
     selectedTag.value = selectedTag.value === tag ? null : tag;
@@ -245,11 +226,7 @@ export const useBlogStore = defineStore("blog", () => {
       selectedCategory.value === category ? null : category;
   };
 
-  const resetFilters = () => {
-    searchQuery.value = "";
-    selectedTag.value = null;
-    selectedCategory.value = null;
-  };
+  
 
   return {
     searchQuery,
@@ -261,8 +238,7 @@ export const useBlogStore = defineStore("blog", () => {
     maxVisibleTags,
     bookmarkedPosts,
     allPosts,
-    isDarkMode,
-    comments,
+    
 
     filteredPosts,
     sortedFilteredPosts,
@@ -272,20 +248,13 @@ export const useBlogStore = defineStore("blog", () => {
     remainingTagsCount,
 
     initBookmarks,
-    initComments,
-    addComment,
-    deleteComment,
-    getPostComments,
-    initDarkMode,
     setAllPosts,
     isBookmarked,
     toggleBookmark,
     toggleShowAllTags,
     setViewType,
-    setSearchQuery,
-    setSortOption,
     toggleTag,
     toggleCategory,
-    resetFilters,
+    
   };
 });

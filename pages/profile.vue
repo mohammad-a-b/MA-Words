@@ -154,7 +154,11 @@ const formatDate = (d) => new Intl.DateTimeFormat('fa-IR', {
                 <LucideCalendar class="w-4 h-4" />
                 <span class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300">{{ formatDate(c.created_at) }}</span>
               </div>
-              <div class="text-xs text-gray-500 dark:text-gray-400">پست: {{ c.post_id }}</div>
+              <div class="flex items-center gap-2">
+                <NuxtLink :to="'blog/' + c.post_id.replace(/^blog\//,'')" class="text-xs px-2 py-1 rounded-lg border transition-colors border-gray-200 hover:bg-gray-50 dark:border-[#ffffff15] dark:hover:bg-white/5">
+                  مشاهده پست
+                </NuxtLink>
+              </div>
             </div>
             <p class="pr-5 leading-7 text-gray-700 dark:text-gray-300">{{ c.content }}</p>
           </div>

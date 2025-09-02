@@ -1,5 +1,6 @@
 let singletonUser
 let initialized = false
+let initPromise = null
 
 export const useAuth = () => {
   if (!singletonUser) singletonUser = ref(null)
@@ -26,13 +27,23 @@ export const useAuth = () => {
     }
   }
 
-  if (process.client && !initialized) {
+  const initAuth = async () => {
+    if (!process.client) return
+    if (initialized) return
+    if (initPromise) return initPromise
     initialized = true
-    fetchUser()
-    $supabase.auth.onAuthStateChange((_event, session) => {
-      user.value = session?.user || null
-    })
+    initPromise = (async () => {
+      await fetchUser()
+      $supabase.auth.onAuthStateChange((_event, session) => {
+        user.value = session?.user || null
+      })
+    })()
+    return initPromise
   }
 
-  return { user, logout }
+  if (process.client && !initialized && !initPromise) {
+    initAuth()
+  }
+
+  return { user, logout, initAuth }
 }

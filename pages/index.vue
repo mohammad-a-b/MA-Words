@@ -1,4 +1,10 @@
 <script setup>
+useHead({
+  title: 'خانه | وبلاگ من',
+  meta: [
+    { name: 'description', content: 'صفحه اصلی وبلاگ؛ معرفی کوتاه و لینک ورود به وبلاگ.' }
+  ]
+})
 </script>
 
 <template>
@@ -12,7 +18,7 @@
             سلام.
           </h1>
           <p class="text-2xl md:text-4xl font-medium text-gray-700 dark:text-gray-200">
-            توسعه‌دهنده فرانت‌اند و علاقه‌مند به تکنولوژیم
+            توسعه‌دهنده فرانت‌اند  هستم
           </p>
         </div>
 

@@ -180,14 +180,17 @@ const handleSignup = async () => {
 </script>
 
 <template>
-  <div
-    v-if="modelValue"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
-  >
+  <Transition name="modal-fade" appear>
     <div
-      ref="modalRef"
-      class="relative w-full max-w-md rounded-2xl p-6 shadow-2xl transition-all border bg-white border-gray-200 dark:bg-[#0f0f1d] dark:border-gray-700"
+      v-if="modelValue"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
     >
+      <Transition name="modal-zoom" appear>
+        <div
+          v-show="modelValue"
+          ref="modalRef"
+          class="relative w-full max-w-md rounded-2xl p-6 shadow-2xl transition-all border bg-white border-gray-200 dark:bg-[#0f0f1d] dark:border-gray-700"
+        >
       <button
         @click="closeModal"
         class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-gray-100 text-gray-500 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-white"
@@ -257,9 +260,7 @@ const handleSignup = async () => {
         <div>
           <label for="password" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">رمز عبور</label>
           <div class="relative">
-            <div
-              class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
-            >
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <LucideLock class="h-5 w-5 text-gray-400" />
             </div>
             <input
@@ -272,7 +273,7 @@ const handleSignup = async () => {
               :autocomplete="isSignup ? 'new-password' : 'current-password'"
               :disabled="isSubmitting"
               dir="ltr"
-              class="w-full pr-10 pl-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-left [&::placeholder]:text-right"
+              class="w-full pr-12 pl-10 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-left [&::placeholder]:text-right"
               :class="[
                 isSubmitting ? 'bg-gray-50 cursor-not-allowed dark:bg-gray-800' : 'bg-white dark:bg-gray-800',
                 v$.password.$error && v$.password.$dirty ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-blue-500 dark:border-gray-600',
@@ -282,7 +283,8 @@ const handleSignup = async () => {
             <button
               type="button"
               @click="showPassword = !showPassword"
-              class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              :aria-label="showPassword ? 'پنهان کردن رمز' : 'نمایش رمز'"
             >
               <LucideEyeOff v-if="showPassword" class="h-5 w-5" />
               <LucideEye v-else class="h-5 w-5" />
@@ -300,7 +302,7 @@ const handleSignup = async () => {
         <div v-if="isSignup">
           <label for="confirmPassword" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">تکرار رمز عبور</label>
           <div class="relative">
-            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <LucideLock class="h-5 w-5 text-gray-400" />
             </div>
             <input
@@ -313,7 +315,7 @@ const handleSignup = async () => {
               autocomplete="new-password"
               :disabled="isSubmitting"
               dir="ltr"
-              class="w-full pr-10 pl-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-left [&::placeholder]:text-right"
+              class="w-full pr-10 pl-10 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-left [&::placeholder]:text-right"
               :class="[
                 isSubmitting ? 'bg-gray-50 cursor-not-allowed dark:bg-gray-800' : 'bg-white dark:bg-gray-800',
                 v$.confirmPassword?.$error && v$.confirmPassword?.$dirty ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-blue-500 dark:border-gray-600',
@@ -360,6 +362,37 @@ const handleSignup = async () => {
           </p>
         </div>
       </form>
+        </div>
+      </Transition>
     </div>
-  </div>
+  </Transition>
 </template>
+
+<style scoped>
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 250ms ease;
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+
+
+.modal-zoom-enter-active,
+.modal-zoom-leave-active {
+  transition: opacity 260ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.modal-zoom-enter-from,
+.modal-zoom-leave-to {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  filter: saturate(90%);
+}
+.modal-zoom-enter-to,
+.modal-zoom-leave-from {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+</style>

@@ -1,1 +1,0 @@
-{"id":"8472b989-4cca-4e34-ac1b-db4fb9b6c7d2","timestamp":1756221944894,"matcher":{"static":{"/api/content/blog/database.sql":{"prerender":true}},"wildcard":{},"dynamic":{}},"prerendered":["/","/profile","/auth/callback","/blog","/blog/javascript-basics","/blog/typescript-guide","/blog/tailwind-tips","/blog/blog1","/blog/about","/blog/react-hooks"]}
